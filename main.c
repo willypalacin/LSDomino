@@ -3,6 +3,7 @@
 
 void main () {
 
-  printf("Probando");
+  printf("Probando\n");
+  printf("Jan \n");
 
 }
