@@ -1,6 +1,2 @@
 #include <stdio.h>
-
-void main () {
-
-  printf ("Hola");
-}
+#include <string.h>
