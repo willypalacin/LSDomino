@@ -1,12 +1,12 @@
 #include <stdio.h>
-
+#include <menu.h>
 #include <string.h>
 
 
 void main () {
 
-  printf ("Hola");
-  printf ("Hola");
+  mostrarMenu();
+
 
 
 }
