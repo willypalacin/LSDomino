@@ -6,6 +6,8 @@
 void main () {
 
   printf ("Hola");
+  printf ("Hola");
+
 
 }
 >>>>>>> 943c57f355d336ffd7618af519c48268daa28577
