@@ -1,6 +1,6 @@
 all: P3
 
-main.o: main.c menu.h
+main.o: main.c menu.h menu.c
 	gcc main.c -c -Wall -Wextra
 
 menu.o: menu.c menu.h

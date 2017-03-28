@@ -1,11 +1,13 @@
-#include <menu.h>
+#include "menu.h"
+#include <stdio.h>
 
 
 void mostrarMenu() {
   printf("%s\n", MENU_WELCOME);
   printf("\t%s\n", MENU_OP1);
-  printf("%s\n", MENU_OP2);
-  printf("%s\n", MENU_OP3 );
+  printf("\t%s\n", MENU_OP2);
+  printf("\t%s\n", MENU_OP3);
+  printf("%s", "Opcion: ");
 
 
 }
@@ -22,7 +24,7 @@ void seleccionarOpcion (int opcion) {
       printf("%d\n", opcion);
       break;
     default:
-      printf("%s", MENSAJE_ERROR_OPCION);
+      printf("%s\n", MENSAJE_ERROR_OPCION);
       break;
   }
 
