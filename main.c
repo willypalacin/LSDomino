@@ -6,13 +6,12 @@
 
 void main () {
   int opcion;
-
-  mostrarMenu();
-  fflushnou();
-  scanf("%d", &opcion);
-  seleccionarOpcion(opcion);
-
-
+  do {
+    mostrarMenu();
+    fflushnou();
+    scanf("%d", &opcion);
+    seleccionarOpcion(opcion);
+  } while (opcion != 3);
 
 
 }

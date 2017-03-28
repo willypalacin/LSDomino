@@ -15,13 +15,13 @@ void mostrarMenu() {
 void seleccionarOpcion (int opcion) {
   switch (opcion) {
     case 1:
-      printf("%d\n", opcion);
+      //Meter nueva partida
       break;
     case 2:
-      printf("%d\n", opcion);
+      //Meter Ranking
       break;
     case 3:
-      printf("%d\n", opcion);
+      printf("%s\n", "Gracias por usar nuestros servicios");
       break;
     default:
       printf("%s\n", MENSAJE_ERROR_OPCION);
