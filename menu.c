@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "ranking.h"
 #include <stdio.h>
 
 
@@ -18,6 +19,7 @@ void seleccionarOpcion (int opcion) {
       //Meter nueva partida
       break;
     case 2:
+      mostrarRanking ();
       //Meter Ranking
       break;
     case 3:
