@@ -14,13 +14,27 @@ void mostrarMenu() {
 }
 
 void seleccionarOpcion (int opcion) {
+
   switch (opcion) {
     case 1:
       //Meter nueva partida
       break;
     case 2:
-      mostrarRanking ();
-      //Meter Ranking
+      //opcion_orden = elegirOrden ();
+      abrirFichero ();
+      /*switch (opcion_orden) {
+        case 1:
+          ordenAlfabetico ();
+          mostrarRanking ();
+          break;
+        case 2:
+          ordenWinRate ();
+          mostrarRanking ();
+          break;
+        default:
+        printf("%s\n", MENSAJE_ERROR_OPCION);
+        break;
+      }*/
       break;
     case 3:
       printf("%s\n", "Gracias por usar nuestros servicios");

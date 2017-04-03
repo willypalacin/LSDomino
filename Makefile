@@ -10,7 +10,7 @@ ranking.o: ranking.c ranking.h
 	gcc ranking.c -c -Wall -Wextra
 
 P3: main.o menu.o ranking.o
-	gcc main.o menu.o -o P3.exe -Wall -Wextra
+	gcc main.o menu.o ranking.o -o P3.exe -Wall -Wextra
 
 clean:
 	rm *.o P3.exe

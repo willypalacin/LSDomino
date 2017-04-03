@@ -7,7 +7,6 @@
 #define MENU_OP1 "1. Nueva Partida"
 #define MENU_OP2 "2. Mostrar Ranking"
 #define MENU_OP3 "3. Salir"
-#define MENSAJE_ERROR_OPCION "Error, solo se admite un numero del 1 al 3"
 #define SALIR 3
 
 
