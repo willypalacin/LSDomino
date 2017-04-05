@@ -17,6 +17,7 @@ void seleccionarOpcion (int opcion) {
 
   switch (opcion) {
     case 1:
+    printf("%s\n", OPCION_INHABILITADA);
       //Meter nueva partida
       break;
     case 2:
