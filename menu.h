@@ -11,8 +11,8 @@
 
 
 
-void mostrarMenu ();
-void seleccionarOpcion (int opcion);
+void MENU_mostrarMenu ();
+void MENU_seleccionarOpcion (int opcion);
 
 
 #endif

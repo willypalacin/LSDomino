@@ -48,10 +48,10 @@ int main () {
   crearFichero ();
 
   do {
-    mostrarMenu();
+    MENU_mostrarMenu();
     fflushnou();
     scanf("%d", &opcion);
-    seleccionarOpcion(opcion);
+    MENU_seleccionarOpcion(opcion);
   } while (opcion != 3);
 
 return 0;

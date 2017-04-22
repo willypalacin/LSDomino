@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 
-void mostrarMenu() {
+void MENU_mostrarMenu() {
   printf("%s\n", MENU_WELCOME);
   printf("\t%s\n", MENU_OP1);
   printf("\t%s\n", MENU_OP2);
@@ -13,7 +13,7 @@ void mostrarMenu() {
 
 }
 
-void seleccionarOpcion (int opcion) {
+void MENU_seleccionarOpcion (int opcion) {
 
   switch (opcion) {
     case 1:
@@ -22,7 +22,7 @@ void seleccionarOpcion (int opcion) {
       break;
     case 2:
       //opcion_orden = elegirOrden ();
-      abrirFichero ();
+      RANKING_abrirFichero ();
       /*switch (opcion_orden) {
         case 1:
           ordenAlfabetico ();

@@ -28,12 +28,12 @@ typedef struct {
   float win_rate;
 } Extra_info;
 
-void abrirFichero ();
-void crearEstructura (FILE * fichero, int num_jugadores);
-int elegirOrden ();
+void RANKING_abrirFichero ();
+void RANKING_crearEstructura (FILE * fichero, int num_jugadores);
+int RANKING_elegirOrden ();
 //void ordenAlfabetico (extra_info, jugadores);
-void ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugadores);
-void printarDatos (Jugador j, Extra_info extra);
+void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugadores);
+void RANKING_printarDatos (Jugador j, Extra_info extra);
 
 
 #endif

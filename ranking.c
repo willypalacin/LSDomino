@@ -1,7 +1,7 @@
 #include "ranking.h"
 
 
-void abrirFichero () {
+void RANKING_abrirFichero () {
   FILE * fichero;
   int num_jugadores;
 
@@ -12,12 +12,12 @@ void abrirFichero () {
   }
   else{
     fread (&num_jugadores, sizeof(int), 1, fichero);
-    crearEstructura (fichero, num_jugadores);
+    RANKING_crearEstructura (fichero, num_jugadores);
     fclose (fichero);
   }
 }
 
-void printarDatos (Jugador j, Extra_info extra){
+void RANKING_printarDatos (Jugador j, Extra_info extra){
   printf("\n");
   printf ("Jugador: %s\n", j.nombre);
   printf ("P.Ganadas: %d\n", j.p_ganadas);
@@ -28,7 +28,7 @@ void printarDatos (Jugador j, Extra_info extra){
 
 }
 
-int elegirOrden() {
+int RANKING_elegirOrden() {
   int orden;
   do {
     printf("%s","\n");
@@ -44,7 +44,7 @@ int elegirOrden() {
 
 }
 
-void ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugadores) {
+void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugadores) {
 	int i, j;
 	Jugador tmp;
 	Extra_info tmp2;
@@ -67,12 +67,12 @@ void ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugador
 		}
 	}
   for (i = 0; i < num_jugadores; i++) {
-    printarDatos (jugadores[i], extra_info[i]);
+    RANKING_printarDatos (jugadores[i], extra_info[i]);
   }
 
 }
 
-void crearEstructura (FILE * fichero, int num_jugadores){
+void RANKING_crearEstructura (FILE * fichero, int num_jugadores){
   Jugador * jugadores;
   int i;
   Extra_info * extra_info;
@@ -95,14 +95,14 @@ void crearEstructura (FILE * fichero, int num_jugadores){
 
 
         }
-        opcion_orden = elegirOrden ();
+        opcion_orden = RANKING_elegirOrden ();
         switch (opcion_orden) {
           case 1:
           printf("%s\n", OPCION_INHABILITADA);
             //ordenAlfabetico (extra_info, jugadores, num_jugadores);
             break;
           case 2:
-            ordenWinRate (jugadores, extra_info, num_jugadores);
+            RANKING_ordenWinRate (jugadores, extra_info, num_jugadores);
             break;
           default:
           printf("%s\n", MENSAJE_ERROR_OPCION);
