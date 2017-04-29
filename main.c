@@ -3,11 +3,6 @@
 #include <conio.h>
 #include <string.h>
 
-typedef struct {
-  char * nombre;
-  int p_ganadas;
-  int p_perdidas;
-} Jugador;
 
 void crearFichero (){
   FILE * fichero;

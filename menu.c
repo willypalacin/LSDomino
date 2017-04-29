@@ -1,6 +1,5 @@
 #include "menu.h"
-#include "ranking.h"
-#include <stdio.h>
+
 
 
 void MENU_mostrarMenu() {
@@ -14,15 +13,18 @@ void MENU_mostrarMenu() {
 }
 
 void MENU_seleccionarOpcion (int opcion) {
-
+  Player * players;
+  int num_players;
   switch (opcion) {
     case 1:
-    printf("%s\n", OPCION_INHABILITADA);
+
+    JUGADORES_leerFichero(&players, &num_players);
+    //printf("%s\n", OPCION_INHABILITADA);
       //Meter nueva partida
       break;
     case 2:
       //opcion_orden = elegirOrden ();
-      RANKING_abrirFichero ();
+      RANKING_abrirFichero();
       /*switch (opcion_orden) {
         case 1:
           ordenAlfabetico ();

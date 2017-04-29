@@ -28,7 +28,7 @@ typedef struct {
   float win_rate;
 } Extra_info;
 
-void RANKING_abrirFichero ();
+void RANKING_abrirFichero();
 void RANKING_crearEstructura (FILE * fichero, int num_jugadores);
 int RANKING_elegirOrden ();
 //void ordenAlfabetico (extra_info, jugadores);
