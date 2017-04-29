@@ -30,7 +30,7 @@ void JUGADORES_asignarCadena(char * nombre, int * turno, char cadena[20]) {
 
   }
   else {
-    while(u <= i) {
+    while(u < i) {
       nombre[u] = cadena[u];
       u++;
     }
@@ -50,21 +50,12 @@ void JUGADORES_guardarEnEstructura (FILE * f_players, Player ** players, int  nu
     printf("%s\n", ERROR_MEMORIA );
   }
   else {
-
     fgets(cadena, 20 , f_players);
-    JUGADORES_asignarCadena((*players)[i].nombre, &((*players)[i].turno) ,cadena);
     i = 0;
-    while (!feof(f_players)) {
+    while (i<num_players) {
       fgets(cadena, 20 , f_players);
       JUGADORES_asignarCadena((*players)[i].nombre, &((*players)[i].turno) ,cadena);
       i++;
-      if(i != num_players) {
-        fgets(cadena, 20 , f_players);
-        JUGADORES_asignarCadena( (*players)[i].nombre, &((*players)[i].turno) ,cadena);
-      }
-      else {
-        fgets(cadena, 20 , f_players);
-      }
     }
   }
 

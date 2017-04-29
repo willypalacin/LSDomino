@@ -15,7 +15,7 @@ typedef struct {
 }Player;
 
 void JUGADORES_leerFichero(Player ** players, int * num_players);
-void JUGADORES_asignarCadena(char * nombre, int * turno, char cadena[20]);
+void JUGADORES_asignarCadenaNombre(char * nombre, int * turno, char cadena[20]);
 void JUGADORES_guardarEnEstructura (FILE * f, Player ** players, int num_players);
 
 #endif
