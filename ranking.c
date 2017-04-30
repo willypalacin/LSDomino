@@ -113,7 +113,8 @@ void RANKING_crearEstructura (FILE * fichero, int num_jugadores){
 
 
         }
-        opcion_orden = RANKING_elegirOrden ();
+        opcion_orden = RANKING_elegirOrden();
+        //ESTE SWITCH LO METERIA EN UNA FUNCION APARTE FUNCION DEMASIADO GRANDE
         switch (opcion_orden) {
           case 1:
 

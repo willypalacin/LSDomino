@@ -1,9 +1,10 @@
 #ifndef _MENU_H_
 #define _MENU_H_
 
-
+#include "ListaPDI.h"
 #include "ranking.h"
 #include "jugadores.h"
+#include "logica.h"
 #include <stdio.h>
 
 #define MENU_WELCOME "Bienvenido al Domino La Salle !"

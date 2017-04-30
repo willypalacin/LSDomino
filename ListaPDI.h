@@ -1,19 +1,24 @@
 #ifndef _LISTAPDI_H_
 #define _LISTAPDI_H_
 
-#define ELEMENTO_INDEFINIDO "Error, la lista esta vacia"
+#include <stdio.h>
+#include <stdlib.h>
 
-typdef struct {
+
+//#define ELEMENTO_INDEFINIDO "Error, la lista esta vacia"
+
+typedef struct {
     int cara1;
     int cara2;
 } Ficha;
 
-typdef struct _Nodo {
+
+typedef struct _Nodo {
     Ficha f;
     struct _Nodo * sig;
 } Nodo;
 
-typdef struct {
+typedef struct {
   Nodo * pri;
   Nodo * ant;
 } ListaPDI;
@@ -25,7 +30,7 @@ Ficha LISTAPDI_consultar (ListaPDI l);
 int LISTAPDI_estaVacia (ListaPDI l);
 void LISTAPDI_irInicio (ListaPDI * l);
 void LISTAPDI_avanzar (ListaPDI * l);
-void LISTAPDI_final (ListaPDI l);
+int LISTAPDI_final (ListaPDI l);
 void LISTAPDI_destruye (ListaPDI * l);
 
 #endif

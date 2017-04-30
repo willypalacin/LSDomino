@@ -1,5 +1,7 @@
 #include "ListaPDI.h"
-#include <stdio.h>
+
+
+
 
 ListaPDI LISTAPDI_crea () {
   ListaPDI l;
@@ -31,22 +33,25 @@ void LISTAPDI_borrar (ListaPDI * l) {
 }
 
 Ficha LISTAPDI_consultar (ListaPDI l) {
+  Ficha ELEMENTO_INDEFINIDO;
+  ELEMENTO_INDEFINIDO.cara1 = 7;
+  ELEMENTO_INDEFINIDO.cara2 = 7;
   Ficha f;
-  if ( l -> ant -> sig == NULL) {
+  if ( l.ant -> sig == NULL) {
     f = ELEMENTO_INDEFINIDO;
   }
   else {
-    f = l -> ant -> sig -> f;
+    f = l.ant -> sig -> f;
   }
   return f;
 }
 
 int LISTAPDI_estaVacia (ListaPDI l) {
-  return l -> pri -> sig == NULL;
+  return l.pri -> sig == NULL;
 }
 
 void LISTAPDI_irInicio (ListaPDI * l) {
-  l -> ant = l -> pri;
+  l->ant = l -> pri;
 }
 
 void LISTAPDI_avanzar (ListaPDI * l) {
@@ -55,13 +60,13 @@ void LISTAPDI_avanzar (ListaPDI * l) {
   }
 }
 
-int LISTAPDI_final (ListaPDI l) {
-  return l -> ant -> sig == NULL;
+int LISTAPDI_final (ListaPDI  l) {
+  return (l.ant -> sig == NULL);
 }
 
 void LISTAPDI_destruye (ListaPDI * l) {
-  LISTAPDI_Inicio (l);
-  while (!ListaPDI_estaVacia (*l)) {
+  LISTAPDI_irInicio (l);
+  while (!LISTAPDI_estaVacia (*l)) {
     LISTAPDI_borrar (l);
   }
   free (l -> pri);
