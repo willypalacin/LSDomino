@@ -44,6 +44,19 @@ void MENU_seleccionarOpcion (int opcion) {
 
     }
     printf("\n\n");
+    LOGICA_fichasRandom(&l);
+
+    for(i = 0; i <= 6; i++) {
+      printf("\n");
+      for (j = i; j <= 6; j++) {
+        f = LISTAPDI_consultar(l);
+        printf("[%d|%d] ", f.cara1, f.cara2);
+
+        LISTAPDI_avanzar (&l);
+
+      }
+
+    }
 
         //printf("%s\n", OPCION_INHABILITADA);
 

@@ -3,8 +3,10 @@
 
 #include "ListaPDI.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 void LOGICA_generarFichas(ListaPDI * l);
+void LOGICA_fichasRandom(ListaPDI * l);
 
 
 #endif
