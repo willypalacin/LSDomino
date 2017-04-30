@@ -16,7 +16,7 @@ void JUGADORES_leerFichero(Player ** players, int * num_players) {
 
 }
 
-void JUGADORES_asignarCadena(char * nombre, int * turno, char cadena[20]) {
+void JUGADORES_asignarCadena(Player ** players, char cadena[20], int w) {
 
   int u = 0;
   int i = 0;
@@ -24,19 +24,18 @@ void JUGADORES_asignarCadena(char * nombre, int * turno, char cadena[20]) {
     i++;
 
   }
-  nombre = (char *) malloc((i+1)* sizeof(char));
-  if(nombre == NULL) {
+  (*players)[w].nombre = (char *) malloc((i+1)* sizeof(char));
+  if((*players)[w].nombre == NULL) {
     printf("%s\n", ERROR_MEMORIA );
 
   }
   else {
     while(u < i) {
-      nombre[u] = cadena[u];
+      (*players)[w].nombre[u] = cadena[u];
       u++;
     }
-    *turno = (int) (cadena[u+2] - '0');
+    (*players)[w].turno = (cadena[u+1] - '0');
   }
-  printf("nombre %s\n", nombre);
   cadena = " ";
 }
 
@@ -50,20 +49,45 @@ void JUGADORES_guardarEnEstructura (FILE * f_players, Player ** players, int  nu
     printf("%s\n", ERROR_MEMORIA );
   }
   else {
-    fgets(cadena, 20 , f_players);
     i = 0;
+    fgets(cadena, 20 , f_players);
     while (i<num_players) {
       fgets(cadena, 20 , f_players);
-      JUGADORES_asignarCadena((*players)[i].nombre, &((*players)[i].turno) ,cadena);
+      JUGADORES_asignarCadena(players ,cadena, i);
       i++;
     }
   }
+}
 
-  printf("Prueba a Introducir Nombre %d\n", num_players);
-  for (i = 0; i < num_players; i++) {
-    printf("El nombre del jugador %d es %s y tiene el turno %d\n", i+1 ,(*players)[i].nombre, ((*players)[i].turno));
+void JUGADORES_ordenSegunTurno(Player ** players, int n) {
 
+  //char * tmp_nom;
+  //tmp_nom = (char *) malloc (sizeof(char) * 21);
+  Player tmp_player;
+  int i, j;
+  /*for (i = 0; i < num_players; i++) {
+    for (j = (num_players - 1); j >= i; j-- ) {
+      if((*players)[j].turno < (*players)[j-1].turno) {
+        //strcpy(*tmp_nom,(*players)[j].nombre);
+        tmp_player = (*players)[j];
+        (*players)[j] = (*players)[j-1];
+        (*players)[j-1] = tmp_player;
+
+      }
+    }
   }
+*/
+for (i = 0 ; i < ( n - 1 ); i++)
+  {
+    for (j = 0 ; j < n - i - 1; j++)
+    {
+      if ((*players)[j].turno > (*players)[j+1].turno) /* For decreasing order use < */
+      {
+        tmp_player = (*players)[j];
+        (*players)[j] = (*players)[j+1];
+        (*players)[j+1] = tmp_player;
 
-
+      }
+    }
+  }
 }

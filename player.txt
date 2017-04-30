@@ -1,5 +1,5 @@
 4
-Manolo/4
-Pepito/3
+Manolo/3
+Pepito/4
 Juan/2
 Paco/1

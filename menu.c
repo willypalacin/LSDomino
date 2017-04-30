@@ -15,10 +15,26 @@ void MENU_mostrarMenu() {
 void MENU_seleccionarOpcion (int opcion) {
   Player * players;
   int num_players;
+  int i;
   switch (opcion) {
     case 1:
 
     JUGADORES_leerFichero(&players, &num_players);
+    //Hasta aquí ya tenemos la estructura de jugadores, faltará ordenarla segun el orden de tirada
+    printf("Prueba a Introducir Nombre %d\n", num_players);
+    for (i = 0; i < num_players; i++) {
+      printf("El nombre del jugador %d es %s y tiene el turno %d\n", i+1 ,(players)[i].nombre, ((players)[i].turno));
+
+    }
+    printf("\n");
+
+    JUGADORES_ordenSegunTurno(&players, num_players);
+    for (i = 0; i < num_players; i++) {
+      printf("El nombre del jugador %d es %s y tiene el turno %d\n", i+1 ,(players)[i].nombre, ((players)[i].turno));
+
+    }
+
+
     //printf("%s\n", OPCION_INHABILITADA);
       //Meter nueva partida
       break;
