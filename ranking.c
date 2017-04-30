@@ -44,6 +44,26 @@ int RANKING_elegirOrden() {
 
 }
 
+void RANKING_ordenarAlfabetico (Jugador * jugadores, Extra_info * extra_info ,int n) {
+  int i, j;
+  Jugador tmp;
+  Extra_info tmp2;
+    for (i = 0 ; i < ( n - 1 ); i++) {
+      for (j = 0 ; j < n - i - 1; j++) {
+        if (strcmp(jugadores[j].nombre,jugadores[j+1].nombre) > 0) {
+          tmp = jugadores[j];
+          jugadores[j] = jugadores[j+1];
+          jugadores[j+1] = tmp;
+
+          tmp2 = extra_info[j];
+          extra_info[j] = extra_info[j + 1];
+          extra_info[j+1] = tmp2;
+
+        }
+      }
+    }
+}
+
 void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugadores) {
 	int i, j;
 	Jugador tmp;
@@ -66,9 +86,7 @@ void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num
 			}
 		}
 	}
-  for (i = 0; i < num_jugadores; i++) {
-    RANKING_printarDatos (jugadores[i], extra_info[i]);
-  }
+
 
 }
 
@@ -98,11 +116,17 @@ void RANKING_crearEstructura (FILE * fichero, int num_jugadores){
         opcion_orden = RANKING_elegirOrden ();
         switch (opcion_orden) {
           case 1:
-          printf("%s\n", OPCION_INHABILITADA);
-            //ordenAlfabetico (extra_info, jugadores, num_jugadores);
+
+            RANKING_ordenarAlfabetico(jugadores,extra_info, num_jugadores);
+            for (i = 0; i < num_jugadores; i++) {
+              RANKING_printarDatos (jugadores[i], extra_info[i]);
+            }
             break;
           case 2:
             RANKING_ordenWinRate (jugadores, extra_info, num_jugadores);
+            for (i = 0; i < num_jugadores; i++) {
+              RANKING_printarDatos (jugadores[i], extra_info[i]);
+            }
             break;
           default:
           printf("%s\n", MENSAJE_ERROR_OPCION);

@@ -1,4 +1,4 @@
-#include "ListaPDI.c"
+#include "ListaPDI.h"
 #include <stdio.h>
 
 ListaPDI LISTAPDI_crea () {

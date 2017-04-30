@@ -60,34 +60,16 @@ void JUGADORES_guardarEnEstructura (FILE * f_players, Player ** players, int  nu
 }
 
 void JUGADORES_ordenSegunTurno(Player ** players, int n) {
-
-  //char * tmp_nom;
-  //tmp_nom = (char *) malloc (sizeof(char) * 21);
   Player tmp_player;
   int i, j;
-  /*for (i = 0; i < num_players; i++) {
-    for (j = (num_players - 1); j >= i; j-- ) {
-      if((*players)[j].turno < (*players)[j-1].turno) {
-        //strcpy(*tmp_nom,(*players)[j].nombre);
-        tmp_player = (*players)[j];
-        (*players)[j] = (*players)[j-1];
-        (*players)[j-1] = tmp_player;
+  for (i = 0 ; i < ( n - 1 ); i++) {
+      for (j = 0 ; j < n - i - 1; j++) {
+        if ((*players)[j].turno > (*players)[j+1].turno) {
+          tmp_player = (*players)[j];
+          (*players)[j] = (*players)[j+1];
+          (*players)[j+1] = tmp_player;
 
+        }
       }
     }
   }
-*/
-for (i = 0 ; i < ( n - 1 ); i++)
-  {
-    for (j = 0 ; j < n - i - 1; j++)
-    {
-      if ((*players)[j].turno > (*players)[j+1].turno) /* For decreasing order use < */
-      {
-        tmp_player = (*players)[j];
-        (*players)[j] = (*players)[j+1];
-        (*players)[j+1] = tmp_player;
-
-      }
-    }
-  }
-}
