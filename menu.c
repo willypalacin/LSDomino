@@ -20,18 +20,18 @@ void MENU_seleccionarOpcion (int opcion) {
   switch (opcion) {
     case 1:
 
-    JUGADORES_leerFichero(&players, &num_players);
-    //Hasta aquí ya tenemos la estructura de jugadores, faltará ordenarla segun el orden de tirada
+      JUGADORES_leerFichero(&players, &num_players);
+      //Hasta aquí ya tenemos la estructura de jugadores, faltará ordenarla segun el orden de tirada
 
 
-    JUGADORES_ordenSegunTurno(&players, num_players);
+      JUGADORES_ordenSegunTurno(&players, num_players);
 
 
-    l = LISTAPDI_crea();
-    LOGICA_generarFichas(&l);
-    LISTAPDI_irInicio(&l);
+      l = LISTAPDI_crea();
+      LOGICA_generarFichas(&l);
+    //LISTAPDI_irInicio(&l);
     //Borrar esto
-    Ficha f;
+    /*Ficha f;
     for(i = 0; i <= 6; i++) {
       printf("\n");
       for (j = i; j <= 6; j++) {
@@ -56,7 +56,11 @@ void MENU_seleccionarOpcion (int opcion) {
 
       }
 
-    }
+
+
+    }*/
+      printf("\n\n");
+
 
         //printf("%s\n", OPCION_INHABILITADA);
 

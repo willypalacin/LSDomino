@@ -60,6 +60,8 @@ void LISTAPDI_avanzar (ListaPDI * l) {
   }
 }
 
+
+
 int LISTAPDI_final (ListaPDI  l) {
   return (l.ant -> sig == NULL);
 }
