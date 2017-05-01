@@ -14,6 +14,7 @@ typedef struct {
 void LOGICA_generarFichas(ListaPDI * l);
 void LOGICA_fichasRandom(ListaPDI * l);
 void LOGICA_desordenarFichas(Ficha_inserir fichas[28]);
+void LOGICA_anadirFichasALista (ListaPDI * l, Ficha_inserir fichas[28]);
 
 
 #endif

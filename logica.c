@@ -18,10 +18,9 @@ void LOGICA_generarFichas(ListaPDI * l) {
     }
 
   }
-
   //ESTE ARRAY ESTA ORDENADO ASI QUE QUEREMOS DESORDENARLO.
   LOGICA_desordenarFichas(fichas);
-  //LOGICA_fichasRandom(l,fichas)
+  LOGICA_anadirFichasALista(l,fichas);
 }
 
 void LOGICA_desordenarFichas(Ficha_inserir fichas[28]) {
@@ -87,3 +86,31 @@ void LOGICA_desordenarFichas(Ficha_inserir fichas[28]) {
 
 
 }*/
+
+void LOGICA_anadirFichasALista (ListaPDI * l, Ficha_inserir fichas[28]) {
+  int i,j;
+  LISTAPDI_irInicio(l);
+  for(i = 0; i < 28; i++) {
+    LISTAPDI_inserir(l,fichas[i].f);
+
+
+  }
+
+  Ficha f;
+  LISTAPDI_irInicio(l);
+  for(i = 0; i <= 6; i++) {
+    printf("\n");
+    for (j = i; j <= 6; j++) {
+      f = LISTAPDI_consultar(*l);
+      printf("[%d|%d] ", f.cara1, f.cara2);
+
+      LISTAPDI_avanzar (l);
+
+    }
+
+  }
+
+
+
+
+}
