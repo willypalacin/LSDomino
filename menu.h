@@ -6,6 +6,7 @@
 #include "jugadores.h"
 #include "logica.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MENU_WELCOME "Bienvenido al Domino La Salle !"
 #define MENU_OP1 "1. Nueva Partida"

@@ -41,51 +41,9 @@ void LOGICA_desordenarFichas(Ficha_inserir fichas[28]) {
     else {
       u++;
     }
-
-
-
-  }
-
-  u = 0;
-  for(i = 0; i <= 6; i++) {
-    printf("\n");
-    for (j = i; j <= 6; j++) {
-      printf("[%d|%d] ", fichas[u].f.cara1, fichas[u].f.cara2);
-      u++;
-    }
   }
 
 }
-//Rehacer el random
-//void LOGICA_fichasRandom(ListaPDI * l, Ficha_inserir fichas[28]) {
-
-
-  /*i = 0;
-  while(i < 29) {
-    for(u = 0; u <= i; u++) {
-      LISTAPDI_avanzar(l);
-
-    }
-    do {
-      numero_random = rand() % 29;
-    }while(numero_random == i-1);
-    aux = LISTAPDI_consultar(*l);
-    //printf("%d\n", aux.cara1);
-    LISTAPDI_borrar(l);
-    LISTAPDI_irInicio(l);
-    for (j = 0; j <= numero_random; j++) {
-      LISTAPDI_avanzar(l);
-
-    }
-    LISTAPDI_inserir(l, aux);
-    LISTAPDI_irInicio(l);
-
-    i++;
-
-  }
-
-
-}*/
 
 void LOGICA_anadirFichasALista (ListaPDI * l, Ficha_inserir fichas[28]) {
   int i,j;
@@ -93,24 +51,30 @@ void LOGICA_anadirFichasALista (ListaPDI * l, Ficha_inserir fichas[28]) {
   for(i = 0; i < 28; i++) {
     LISTAPDI_inserir(l,fichas[i].f);
 
-
   }
 
+}
+
+void LOGICA_robarFicha(ListaPDI * l, ListaPDI * lista_jugadores, int i) {
+  Ficha aux;
+  LISTAPDI_irInicio(l);
+  LISTAPDI_irInicio(&lista_jugadores[i]);
+  aux = LISTAPDI_consultar(*l);
+  LISTAPDI_borrar(l);
+  LISTAPDI_inserir(&lista_jugadores[i], aux);
+
+}
+
+void LOGICA_pintarTablero(ListaPDI * l) {
   Ficha f;
   LISTAPDI_irInicio(l);
-  for(i = 0; i <= 6; i++) {
-    printf("\n");
-    for (j = i; j <= 6; j++) {
-      f = LISTAPDI_consultar(*l);
-      printf("[%d|%d] ", f.cara1, f.cara2);
-
-      LISTAPDI_avanzar (l);
-
-    }
+  printf("Tablero: ");
+  while(LISTAPDI_final(*l) == 0){
+    f = LISTAPDI_consultar(*l);
+    printf("[%d|%d] ", f.cara1, f.cara2);
+    LISTAPDI_avanzar (l);
 
   }
-
-
-
+  printf("\n\n");
 
 }

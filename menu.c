@@ -15,42 +15,48 @@ void MENU_mostrarMenu() {
 void MENU_seleccionarOpcion (int opcion) {
   Player * players;
   ListaPDI l;
+  ListaPDI * lista_jugadores;
   int num_players;
   int i,j;
   switch (opcion) {
     case 1:
 
       JUGADORES_leerFichero(&players, &num_players);
-      //Hasta aquí ya tenemos la estructura de jugadores, faltará ordenarla segun el orden de tirada
-
-
+      //Hasta aquí ya tenemos la estructura de jugadores, faltará ordenarla segun el orden de tirad
       JUGADORES_ordenSegunTurno(&players, num_players);
-
 
       l = LISTAPDI_crea();
       LOGICA_generarFichas(&l);
 
-    //LISTAPDI_irInicio(&l);
-    //Borrar esto
-    
-    /*
-    printf("\n\n");
-    LOGICA_fichasRandom(&l);
+      /*Ficha f;
+      LISTAPDI_irInicio(&l);
+      for(i = 0; i <= 6; i++) {
+        printf("\n");
+        for (j = i; j <= 6; j++) {
+          f = LISTAPDI_consultar(l);
+          printf("[%d|%d] ", f.cara1, f.cara2);
 
-    for(i = 0; i <= 6; i++) {
-      printf("\n");
-      for (j = i; j <= 6; j++) {
-        f = LISTAPDI_consultar(l);
-        printf("[%d|%d] ", f.cara1, f.cara2);
+          LISTAPDI_avanzar (&l);
 
-        LISTAPDI_avanzar (&l);
+        }
 
       }
+      printf("\n\n");*/
+      LOGICA_pintarTablero(&l);
 
-
-
-    }*/
-      printf("\n\n");
+      lista_jugadores = (ListaPDI *) malloc (sizeof(ListaPDI) * num_players);
+      if(lista_jugadores == NULL) {
+        printf("Error al crear la estructura de los jugadores\n");
+      }
+      else {
+        for(i = 0; i < num_players; i++) {
+          lista_jugadores[i] = LISTAPDI_crea();
+          for(j = 0; j < 5; j++){
+            LOGICA_robarFicha(&l, lista_jugadores, i);
+          }
+        }
+      }
+      LOGICA_pintarTablero(&l);
 
 
         //printf("%s\n", OPCION_INHABILITADA);
