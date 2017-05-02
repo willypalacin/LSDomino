@@ -66,6 +66,16 @@ int LISTAPDI_final (ListaPDI  l) {
   return (l.ant -> sig == NULL);
 }
 
+Ficha LISTAPDI_consultarFinalLista(ListaPDI * l) {
+  LISTAPDI_irInicio(l);
+  while(LISTAPDI_final(*l) == 0) {
+    LISTAPDI_avanzar(l);
+
+  }
+
+  return l->ant->f;
+}
+
 void LISTAPDI_destruye (ListaPDI * l) {
   LISTAPDI_irInicio (l);
   while (!LISTAPDI_estaVacia (*l)) {

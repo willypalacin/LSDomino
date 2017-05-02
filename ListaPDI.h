@@ -30,6 +30,7 @@ Ficha LISTAPDI_consultar (ListaPDI l);
 int LISTAPDI_estaVacia (ListaPDI l);
 void LISTAPDI_irInicio (ListaPDI * l);
 void LISTAPDI_avanzar (ListaPDI * l);
+Ficha LISTAPDI_consultarFinalLista(ListaPDI * l);
 int LISTAPDI_final (ListaPDI l);
 void LISTAPDI_destruye (ListaPDI * l);
 

@@ -78,3 +78,60 @@ void LOGICA_pintarTablero(ListaPDI * l) {
   printf("\n\n");
 
 }
+
+void LOGICA_dinamicaJuego(ListaPDI* l, ListaPDI * lista_jugadores, Player * players, int num_players) {
+  int fin = 0;
+  int i;
+
+  while(fin == 0) {
+    i = 0;
+    while(i < num_players) {
+      printf("Fichas %s:\n", players[i].nombre);
+      LOGICA_mostrarFichasJugador(lista_jugadores, l ,i);
+      i++;
+    }
+  }
+}
+int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f) {
+  int ok = 0;
+  Ficha aux;
+  LISTAPDI_irInicio(l);
+  aux = LISTAPDI_consultar(*l);
+  if (aux.cara1 == f.cara1 || aux.cara1 == f.cara2 || aux.cara2 == f.cara1 || aux.cara2 == f.cara2) {
+    ok = 1;
+
+  }
+
+  aux = LISTAPDI_consultarFinalLista(l);
+  
+  if (aux.cara1 == f.cara1 || aux.cara1 == f.cara2 || aux.cara2 == f.cara1 || aux.cara2 == f.cara2) {
+    ok = 2;
+
+  }
+  return ok;
+}
+void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores, ListaPDI * l ,int i) {
+  Ficha f;
+  int ok;
+  int opcion;
+  int j = 0;
+  LISTAPDI_irInicio(&lista_jugadores[i]);
+  while(LISTAPDI_final(lista_jugadores[i]) == 0) {
+    f = LISTAPDI_consultar(lista_jugadores[i]);
+    ok = LOGICA_sePuedeColocarFicha(l, f);
+    if (ok == 1 || ok == 2) {
+      printf("\t%d- [%d]|[%d] -> \n", j+1, f.cara1, f.cara2);
+    }
+    else {
+      printf("\t%d- [%d]|[%d]\n", j+1, f.cara1, f.cara2);
+    }
+    LISTAPDI_avanzar(&lista_jugadores[i]);
+
+    j++;
+  }
+  printf("Opcion Ficha: ");
+  scanf("%d", &opcion);
+  LISTAPDI_irInicio(lista_jugadores);
+
+
+}
