@@ -36,7 +36,7 @@ void LOGICA_desordenarFichas(Ficha_inserir fichas[28]) {
 
       fichas[numero_random].inserida = 1;
       fichas[u].inserida = 1;
-      u++;
+
     }
     else {
       u++;
@@ -85,13 +85,16 @@ void LOGICA_dinamicaJuego(ListaPDI* l, ListaPDI * lista_jugadores, Player * play
 
   while(fin == 0) {
     i = 0;
+    //AQUI COMPROBARIAMOS SI HAY GANADOR
     while(i < num_players) {
+      LOGICA_pintarTablero(l);
       printf("Fichas %s:\n", players[i].nombre);
       LOGICA_mostrarFichasJugador(lista_jugadores, l ,i);
       i++;
     }
   }
 }
+
 int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f) {
   int ok = 0;
   Ficha aux;
@@ -103,7 +106,7 @@ int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f) {
   }
 
   aux = LISTAPDI_consultarFinalLista(l);
-  
+
   if (aux.cara1 == f.cara1 || aux.cara1 == f.cara2 || aux.cara2 == f.cara1 || aux.cara2 == f.cara2) {
     ok = 2;
 
@@ -127,11 +130,48 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores, ListaPDI * l ,int i
     }
     LISTAPDI_avanzar(&lista_jugadores[i]);
 
+
     j++;
   }
-  printf("Opcion Ficha: ");
+  printf("Opcion ficha: ");
   scanf("%d", &opcion);
+  LOGICA_llevarOpcionATablero(l,lista_jugadores, opcion, i);
   LISTAPDI_irInicio(lista_jugadores);
+
+
+}
+
+void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, int opcion, int i) {
+  int j = 0;
+  int ok = 0;
+  Ficha f;
+  Ficha aux;
+  LISTAPDI_irInicio(&lista_jugadores[i]);
+  while (j<opcion-1) {
+    LISTAPDI_avanzar(&lista_jugadores[i]);
+    j++;
+
+  }
+  f = LISTAPDI_consultar(lista_jugadores[i]);
+  ok = LOGICA_sePuedeColocarFicha(l, f);
+  if (ok == 1) {
+    LISTAPDI_irInicio(l);
+    LISTAPDI_inserir(l, f);
+    LISTAPDI_borrar(&lista_jugadores[i]);
+
+  }
+  if (ok == 2) {
+    aux = LISTAPDI_consultarFinalLista(l);
+    LISTAPDI_inserir(l, f);
+    LISTAPDI_borrar(&lista_jugadores[i]);
+
+  }
+  if (ok == 0) {
+    printf("\nTal y como esta indicado, no es posible pasar esta ficha. Se pasa turno por defecto\n");
+
+  }
+
+
 
 
 }

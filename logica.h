@@ -21,6 +21,6 @@ void LOGICA_pintarTablero(ListaPDI * l);
 void LOGICA_dinamicaJuego(ListaPDI* l, ListaPDI * lista_jugadores, Player * players, int num_players);
 void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores, ListaPDI * l ,int i);
 int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f);
-
+void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, int opcion, int i);
 
 #endif
