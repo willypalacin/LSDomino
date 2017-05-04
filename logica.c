@@ -133,23 +133,27 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores, ListaPDI * l ,int i
 
     j++;
   }
+  printf("\t%d- Robar Ficha\n", j+1);
+  printf("\t%d- Pasar Turno\n", j+2);
+
+  //Con el indice j implementas
   printf("Opcion ficha: ");
   scanf("%d", &opcion);
-  LOGICA_llevarOpcionATablero(l,lista_jugadores, opcion, i);
+  LOGICA_llevarOpcionATablero(l,lista_jugadores, opcion, i, j);
   LISTAPDI_irInicio(lista_jugadores);
 
 
 }
 
-void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, int opcion, int i) {
-  int j = 0;
+void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, int opcion, int i, int j) {
+  int u = 0;
   int ok = 0;
   Ficha f;
   Ficha aux;
   LISTAPDI_irInicio(&lista_jugadores[i]);
-  while (j<opcion-1) {
+  while (u<opcion-1) {
     LISTAPDI_avanzar(&lista_jugadores[i]);
-    j++;
+    u++;
 
   }
   f = LISTAPDI_consultar(lista_jugadores[i]);
@@ -166,8 +170,16 @@ void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, int op
     LISTAPDI_borrar(&lista_jugadores[i]);
 
   }
-  if (ok == 0) {
-    printf("\nTal y como esta indicado, no es posible pasar esta ficha. Se pasa turno por defecto\n");
+  if (ok == 0 && (opcion != j+1 || opcion!= j+2)) {
+    printf("\nTal y como esta indicado, no es posible pasar esta ficha. \nSe pasa turno por defecto\n\n");
+
+  }
+  if(opcion == j + 1) {
+    printf("\nSe pasa turno\n\n");
+
+  }
+  if(opcion == j + 2) {
+    printf("Se roba ficha\n\n");
 
   }
 

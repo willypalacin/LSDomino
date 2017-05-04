@@ -57,7 +57,6 @@ void MENU_seleccionarOpcion (int opcion) {
           }
         }
       }
-      LOGICA_pintarTablero(&l);
 
       //Aqui comienza el JUEGO
       LOGICA_dinamicaJuego(&l, lista_jugadores, players ,num_players);
