@@ -29,25 +29,11 @@ void MENU_seleccionarOpcion (int opcion) {
       l = LISTAPDI_crea();
       LOGICA_generarFichas(&l);
 
-      /*Ficha f;
-      LISTAPDI_irInicio(&l);
-      for(i = 0; i <= 6; i++) {
-        printf("\n");
-        for (j = i; j <= 6; j++) {
-          f = LISTAPDI_consultar(l);
-          printf("[%d|%d] ", f.cara1, f.cara2);
-
-          LISTAPDI_avanzar (&l);
-
-        }
-
-      }
-      printf("\n\n");*/
-      LOGICA_pintarTablero(&l);
+      //LOGICA_pintarTablero(&l);
 
       lista_jugadores = (ListaPDI *) malloc (sizeof(ListaPDI) * num_players);
       if(lista_jugadores == NULL) {
-        printf("Error al crear la estructura de los jugadores\n");
+        printf("%s\n",ERROR_ESTRUCTURA_JUGADORES);
       }
       else {
         for(i = 0; i < num_players; i++) {
@@ -70,7 +56,7 @@ void MENU_seleccionarOpcion (int opcion) {
 
       break;
     case 3:
-      printf("%s\n", "Gracias por usar nuestros servicios");
+      printf("%s\n", MENSAJE_ADIOS);
       break;
     default:
       printf("%s\n", MENSAJE_ERROR_OPCION);

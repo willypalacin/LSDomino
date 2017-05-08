@@ -1,7 +1,7 @@
 #include "jugadores.h"
 
 
-void JUGADORES_leerFichero(Player ** players, int * num_players) {
+void JUGADORES_leerFichero(Player* *players, int * num_players) {
 
   FILE * f_players;
   f_players = fopen("player.txt","r");

@@ -79,7 +79,7 @@ void LOGICA_pintarTablero(ListaPDI * l) {
 
 }
 
-void LOGICA_dinamicaJuego(ListaPDI* l, ListaPDI * lista_jugadores, Player * players, int num_players) {
+void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, Player * players, int num_players) {
   int fin = 0;
   int i;
 
@@ -87,6 +87,7 @@ void LOGICA_dinamicaJuego(ListaPDI* l, ListaPDI * lista_jugadores, Player * play
     i = 0;
     //AQUI COMPROBARIAMOS SI HAY GANADOR
     while(i < num_players) {
+      //PRINTAR SOLO UNA FICHA.
       LOGICA_pintarTablero(l);
       printf("Fichas %s:\n", players[i].nombre);
       LOGICA_mostrarFichasJugador(lista_jugadores, l ,i);
@@ -123,16 +124,17 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores, ListaPDI * l ,int i
     f = LISTAPDI_consultar(lista_jugadores[i]);
     ok = LOGICA_sePuedeColocarFicha(l, f);
     if (ok == 1 || ok == 2) {
-      printf("\t%d- [%d]|[%d] -> \n", j+1, f.cara1, f.cara2);
+      printf("\t%d- [%d|%d] -> \n", j+1, f.cara1, f.cara2);
     }
     else {
-      printf("\t%d- [%d]|[%d]\n", j+1, f.cara1, f.cara2);
+      printf("\t%d- [%d|%d]\n", j+1, f.cara1, f.cara2);
     }
     LISTAPDI_avanzar(&lista_jugadores[i]);
 
 
     j++;
   }
+  //Modificar el contar ficha
   printf("\t%d- Robar Ficha\n", j+1);
   printf("\t%d- Pasar Turno\n", j+2);
 
