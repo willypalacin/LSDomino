@@ -12,7 +12,13 @@ void RANKING_abrirFichero () {
   }
   else{
     fread (&num_jugadores, sizeof(int), 1, fichero);
-    RANKING_crearEstructura (fichero, num_jugadores);
+    if (num_jugadores > 0) {
+      RANKING_crearEstructura (fichero, num_jugadores);
+
+    }
+    else {
+      printf("%s\n", FICHERO_VACIO);
+    }
     fclose (fichero);
   }
 }

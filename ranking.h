@@ -16,6 +16,7 @@
 #define MENSAJE_ERROR_OPCION "Error, solo se admite un numero del 1 al 3"
 #define OPCION_PARA_ORDENAR "\nOpcion para ordenar [1/2]: "
 #define OPCION_INHABILITADA "\nLo sentimos, esta opcion está inhabilitada por ahora contacte con atrias@salleurl.edu para mas info\n"
+#define FICHERO_VACIO "El fichero no tiene jugadores, no se puede mostrar ranking"
 
 
 typedef struct {
