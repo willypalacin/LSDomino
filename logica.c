@@ -79,7 +79,7 @@ void LOGICA_pintarTablero(ListaPDI * l) {
 
 }
 
-void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, Player * players, int num_players) {
+void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero , Player * players, int num_players) {
   int fin = 0;
   int i;
 
@@ -88,9 +88,9 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, Player * pla
     //AQUI COMPROBARIAMOS SI HAY GANADOR
     while(i < num_players) {
       //PRINTAR SOLO UNA FICHA.
-      LOGICA_pintarTablero(l);
+      LOGICA_pintarTablero(tablero);
       printf("Fichas %s:\n", players[i].nombre);
-      LOGICA_mostrarFichasJugador(lista_jugadores, l ,i);
+      LOGICA_mostrarFichasJugador(lista_jugadores,l,tablero,i);
       i++;
     }
   }
@@ -114,7 +114,7 @@ int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f) {
   }
   return ok;
 }
-void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores, ListaPDI * l ,int i) {
+void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores ,ListaPDI * l, ListaPDI * tablero ,int i) {
   Ficha f;
   int ok;
   int opcion;
@@ -122,7 +122,7 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores, ListaPDI * l ,int i
   LISTAPDI_irInicio(&lista_jugadores[i]);
   while(LISTAPDI_final(lista_jugadores[i]) == 0) {
     f = LISTAPDI_consultar(lista_jugadores[i]);
-    ok = LOGICA_sePuedeColocarFicha(l, f);
+    ok = LOGICA_sePuedeColocarFicha(tablero, f);
     if (ok == 1 || ok == 2) {
       printf("\t%d- [%d|%d] -> \n", j+1, f.cara1, f.cara2);
     }
@@ -141,13 +141,13 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores, ListaPDI * l ,int i
   //Con el indice j implementas
   printf("Opcion ficha: ");
   scanf("%d", &opcion);
-  LOGICA_llevarOpcionATablero(l,lista_jugadores, opcion, i, j);
+  LOGICA_llevarOpcionATablero(l,lista_jugadores, tablero ,opcion, i, j);
   LISTAPDI_irInicio(lista_jugadores);
 
 
 }
 
-void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, int opcion, int i, int j) {
+void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, ListaPDI* tablero,int opcion, int i, int j) {
   int u = 0;
   int ok = 0;
   Ficha f;
@@ -159,25 +159,25 @@ void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, int op
 
   }
   f = LISTAPDI_consultar(lista_jugadores[i]);
-  ok = LOGICA_sePuedeColocarFicha(l, f);
+  ok = LOGICA_sePuedeColocarFicha(tablero, f);
   if (ok == 1) {
-    LISTAPDI_irInicio(l);
-    LISTAPDI_inserir(l, f);
+    LISTAPDI_irInicio(tablero);
+    LISTAPDI_inserir(tablero, f);
     LISTAPDI_borrar(&lista_jugadores[i]);
 
   }
   if (ok == 2) {
-    aux = LISTAPDI_consultarFinalLista(l);
-    LISTAPDI_inserir(l, f);
+    aux = LISTAPDI_consultarFinalLista(tablero);
+    LISTAPDI_inserir(tablero, f);
     LISTAPDI_borrar(&lista_jugadores[i]);
 
   }
   if (ok == 0 && (opcion != j+1 || opcion!= j+2)) {
-    printf("\nTal y como esta indicado, no es posible pasar esta ficha. \nSe pasa turno por defecto\n\n");
+    printf("%s\n", NO_SE_PUEDE_FICHA);
 
   }
   if(opcion == j + 1) {
-    printf("\nSe pasa turno\n\n");
+    printf("%s\n", PASAR_TURNO);
 
   }
   if(opcion == j + 2) {

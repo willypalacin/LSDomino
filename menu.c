@@ -16,6 +16,7 @@ void MENU_seleccionarOpcion (int opcion) {
   Player * players;
   ListaPDI l;
   ListaPDI * lista_jugadores;
+  ListaPDI tablero;
   int num_players;
   int i,j;
   int fin = 0;
@@ -43,9 +44,11 @@ void MENU_seleccionarOpcion (int opcion) {
           }
         }
       }
-
+      tablero = LISTAPDI_crea();
+      LISTAPDI_inserir(&tablero, LISTAPDI_consultar(l));
+      LISTAPDI_borrar(&l);
       //Aqui comienza el JUEGO
-      LOGICA_dinamicaJuego(&l, lista_jugadores, players ,num_players);
+      LOGICA_dinamicaJuego(&l, lista_jugadores, &tablero, players ,num_players);
 
 
 

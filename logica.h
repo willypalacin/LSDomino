@@ -6,6 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define NO_SE_PUEDE_FICHA "\nTal y como esta indicado, no es posible pasar esta ficha. \nSe pasa roba por defecto\n"
+#define PASAR_TURNO "\nSe pasa turno\n"
+
 typedef struct {
   int inserida;
   Ficha f;
@@ -18,9 +21,8 @@ void LOGICA_desordenarFichas(Ficha_inserir fichas[28]);
 void LOGICA_anadirFichasALista (ListaPDI * l, Ficha_inserir fichas[28]);
 void LOGICA_robarFicha(ListaPDI * l, ListaPDI * lista_jugadores, int i);
 void LOGICA_pintarTablero(ListaPDI * l);
-void LOGICA_dinamicaJuego(ListaPDI* l, ListaPDI * lista_jugadores, Player * players, int num_players);
-void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores, ListaPDI * l ,int i);
+void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero , Player * players, int num_players);
 int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f);
-void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, int opcion, int i, int j);
-
+void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores , ListaPDI * l, ListaPDI * tablero , int i);
+void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, ListaPDI* tablero,int opcion, int i, int j);
 #endif
