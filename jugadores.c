@@ -49,8 +49,11 @@ void JUGADORES_guardarEnEstructura (FILE * f_players, Player ** players, int  nu
     printf("%s\n", ERROR_MEMORIA );
   }
   else {
+    //no hace falta prelectura, sabemos el num de jugadores
     i = 0;
+    //almacenamos en un gets que luego trataremos por separado en asignar cadena
     fgets(cadena, 20 , f_players);
+
     while (i<num_players) {
       fgets(cadena, 20 , f_players);
       JUGADORES_asignarCadena(players ,cadena, i);
@@ -60,6 +63,7 @@ void JUGADORES_guardarEnEstructura (FILE * f_players, Player ** players, int  nu
 }
 
 void JUGADORES_ordenSegunTurno(Player ** players, int n) {
+  //bubble sort que ordena segun el turno correspondiente
   Player tmp_player;
   int i, j;
   for (i = 0 ; i < ( n - 1 ); i++) {
