@@ -136,8 +136,8 @@ void RANKING_crearEstructura (FILE * fichero, int num_jugadores){
             }
             break;
           default:
-          printf("%s\n", MENSAJE_ERROR_OPCION);
-          break;
+            printf("%s\n", MENSAJE_ERROR_OPCION);
+            break;
       }
     }
   }

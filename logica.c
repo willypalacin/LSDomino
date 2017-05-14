@@ -64,6 +64,92 @@ void LOGICA_robarFicha(ListaPDI * l, ListaPDI * lista_jugadores, int i) {
   LISTAPDI_inserir(&lista_jugadores[i], aux);
 
 }
+void LOGICA_robarFichaYMostrarla(ListaPDI * l, ListaPDI * lista_jugadores, int i) {
+  Ficha aux;
+  int c;
+  LISTAPDI_irInicio(l);
+  LISTAPDI_irInicio(&lista_jugadores[i]);
+  aux = LISTAPDI_consultar(*l);
+  LISTAPDI_borrar(l);
+  LISTAPDI_inserir(&lista_jugadores[i], aux);
+  printf(SE_HA_ROBADO_FICHA_X, aux.cara1, aux.cara2);
+
+  fflushnou();
+  system ("/bin/stty raw");
+  c = getchar();
+  system ("/bin/stty cooked");
+  fflushnou();
+  printf("\n");
+
+}
+int LOGICA_asignarGanador(ListaPDI* lista_jugadores, Player * players ,int num_players){
+  int empate = -1;
+  int hay_domino[4];
+  int i, fin;
+    for(i = 0; i < num_players; i++) {
+      hay_domino[i] = 0;
+      if(LISTAPDI_estaVacia(lista_jugadores[i]) == 1) {
+        hay_domino[i] = 1;
+        empate++;
+      }
+    }
+    if(empate >= 1) {
+      empate = 1;
+    }
+    switch (empate) {
+      case 0:
+        for(i = 0; i<num_players; i++) {
+          if(hay_domino[i] == 1) {
+            printf("%s ha hecho domino!!\n", players[i].nombre);
+            fin = 1;
+          }
+        }
+        break;
+      case 1:
+        printf("Hay un empate entre: ");
+        for(i = 0; i<num_players; i++) {
+          if(hay_domino[i] == 1) {
+            printf("%s ", players[i].nombre);
+            fin = 1;
+          }
+        }
+        break;
+    }
+    if(empate == -1) {
+      fin = 0;
+    }
+    return fin;
+
+}
+
+int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, int num_players, int pasar_turno) {
+  int fin, minima,i,u;
+  int sumatorio_fichas[4];
+  if(pasar_turno < 4) {
+    fin = LOGICA_asignarGanador(lista_jugadores, num_players);
+
+  }
+  else {
+    fin = 1;
+    for(i = 0; i < num_players; i++) {
+      sumatorio_fichas[i] = 0;
+      while(LISTAPDI_estaVacia(*lista_jugadores[i] == 0)) {
+        sumatorio_fichas[i] = sumatorio_fichas[i] + LISTAPDI_consultar(*lista_jugadores[i]).cara1 + LISTAPDI_consultar(*lista_jugadores[i]).cara2;
+        LISTAPDI_avanzar(lista_jugadores[i]);
+      }
+    }
+    i = 0;
+    minima = sumatorio_fichas[0];
+    while(i<num_players) {
+      if(sumatorio_fichas[i]<minima) {
+        minima = sumatorio_fichas[i];
+        u = i;
+      }
+    }
+    printf("Como todos han pasado turno, el ganador es %s por tener menos fichas\n", players[u].nombre);
+  }
+  return fin;
+}
 
 void LOGICA_pintarTablero(ListaPDI * l) {
   Ficha f;
@@ -72,7 +158,7 @@ void LOGICA_pintarTablero(ListaPDI * l) {
   while(LISTAPDI_final(*l) == 0){
     f = LISTAPDI_consultar(*l);
     printf("[%d|%d] ", f.cara1, f.cara2);
-    LISTAPDI_avanzar (l);
+    LISTAPDI_avanzar(l);
 
   }
   printf("\n\n");
@@ -82,15 +168,18 @@ void LOGICA_pintarTablero(ListaPDI * l) {
 void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero , Player * players, int num_players) {
   int fin = 0;
   int i;
+  int pasar_turno = 0
 
   while(fin == 0) {
     i = 0;
-    //AQUI COMPROBARIAMOS SI HAY GANADOR
-    while(i < num_players) {
+
+    fin = LOGICA_hayGanador(lista_jugadores, players ,num_players ,pasar_turno);
+    pasar_turno = 0;
+    while(i < num_players && fin == 0) {
       //PRINTAR SOLO UNA FICHA.
       LOGICA_pintarTablero(tablero);
       printf("Fichas %s:\n", players[i].nombre);
-      LOGICA_mostrarFichasJugador(lista_jugadores,l,tablero,i);
+      LOGICA_mostrarFichasJugador(lista_jugadores,l,tablero,i,&pasar_turno);
       i++;
     }
   }
@@ -109,83 +198,124 @@ int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f) {
   aux = LISTAPDI_consultarFinalLista(l);
 
   if (aux.cara1 == f.cara1 || aux.cara1 == f.cara2 || aux.cara2 == f.cara1 || aux.cara2 == f.cara2) {
-    ok = 2;
+    ok = ok + 2;
 
   }
   return ok;
 }
-void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores ,ListaPDI * l, ListaPDI * tablero ,int i) {
+void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores ,ListaPDI * l, ListaPDI * tablero ,int i, int * pasar_turno) {
   Ficha f;
   int ok;
+  int contador_flecha = 0;
   int opcion;
   int j = 0;
   LISTAPDI_irInicio(&lista_jugadores[i]);
   while(LISTAPDI_final(lista_jugadores[i]) == 0) {
     f = LISTAPDI_consultar(lista_jugadores[i]);
     ok = LOGICA_sePuedeColocarFicha(tablero, f);
-    if (ok == 1 || ok == 2) {
+    if (ok > 0) {
       printf("\t%d- [%d|%d] -> \n", j+1, f.cara1, f.cara2);
+      contador_flecha++;
     }
     else {
       printf("\t%d- [%d|%d]\n", j+1, f.cara1, f.cara2);
     }
     LISTAPDI_avanzar(&lista_jugadores[i]);
-
-
     j++;
   }
   //Modificar el contar ficha
-  printf("\t%d- Robar Ficha\n", j+1);
-  printf("\t%d- Pasar Turno\n", j+2);
-
-  //Con el indice j implementas
-  printf("Opcion ficha: ");
-  scanf("%d", &opcion);
-  LOGICA_llevarOpcionATablero(l,lista_jugadores, tablero ,opcion, i, j);
+  LOGICA_llevarOpcionATablero(l,lista_jugadores, tablero ,opcion, i, j, contador_flecha, &pasar_turno);
   LISTAPDI_irInicio(lista_jugadores);
+}
 
+void LOGICA_inserirIzq(ListaPDI * tablero, ListaPDI * lista_jugadores, Ficha f, int i) {
+  LISTAPDI_irInicio(tablero);
+  LISTAPDI_inserir(tablero, f);
+  LISTAPDI_borrar(&lista_jugadores[i]);
 
 }
 
-void LOGICA_llevarOpcionATablero(ListaPDI * l,ListaPDI * lista_jugadores, ListaPDI* tablero,int opcion, int i, int j) {
+void LOGICA_inserirDcha(ListaPDI * tablero, ListaPDI * lista_jugadores, Ficha f,int i) {
+  Ficha aux;
+  aux = LISTAPDI_consultarFinalLista(tablero);
+  LISTAPDI_inserir(tablero, f);
+  LISTAPDI_borrar(&lista_jugadores[i]);
+}
+
+void LOGICA_preguntarOpcion(int * opcion, const texto[30]){
+  printf("%s", texto);
+  fflushnou();
+  scanf("%d", opcion);
+
+}
+void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero,int opcion, int i, int j, int * contador_flecha, int * pasar_turno) {
   int u = 0;
   int ok = 0;
-  Ficha f;
-  Ficha aux;
-  LISTAPDI_irInicio(&lista_jugadores[i]);
-  while (u<opcion-1) {
-    LISTAPDI_avanzar(&lista_jugadores[i]);
-    u++;
+  Ficha f, aux;
+  if(contador_flecha == 0 && LISTAPDI_estaVacia(l) == 0){
+    j++;
+    printf("\t%d- Robar Ficha\n", j);
+  }
+  if(contador_flecha == 0 && LISTAPDI_estaVacia(l) == 1){
+    j++;
+    printf("\t%d- Pasar Turno\n", j);
+    *pasar_turno++;
+  }
+  do {
+    LOGICA_preguntarOpcion(&opcion, "Opcion Ficha: ");
+    LISTAPDI_irInicio(&lista_jugadores[i]);
+    while (u<opcion-1) {
+      LISTAPDI_avanzar(&lista_jugadores[i]);
+      u++;
+    }
+    f = LISTAPDI_consultar(lista_jugadores[i]);
+    ok = LOGICA_sePuedeColocarFicha(tablero, f);
+
+    if(ok == 0){
+      printf("%s\n", ERROR_OPCION_FICHA_VALIDA );
+    }
+  }while (ok == 0 && (contador_flecha == 1 && ok == 0));
+  LOGICA_insertarLugarCorrespondiente(tablero, lista_jugadores,l ,f, ok ,i, j);
+}
+
+void LOGICA_insertarLugarCorrespondiente(ListaPDI * tablero, ListaPDI* lista_jugadores, ListaPDI* l, Ficha f, int ok ,int i, int j, int) {
+  int izq_dcha;
+  if(ok == 0) {
+    if(LISTAPDI_estaVacia(l) == 0)
+      LOGICA_robarFichaYMostrarla(l,lista_jugadores,i);
+    }
 
   }
-  f = LISTAPDI_consultar(lista_jugadores[i]);
-  ok = LOGICA_sePuedeColocarFicha(tablero, f);
   if (ok == 1) {
-    LISTAPDI_irInicio(tablero);
-    LISTAPDI_inserir(tablero, f);
-    LISTAPDI_borrar(&lista_jugadores[i]);
-
+    LOGICA_inserirIzq(tablero, lista_jugadores,f,i);
   }
   if (ok == 2) {
-    aux = LISTAPDI_consultarFinalLista(tablero);
-    LISTAPDI_inserir(tablero, f);
-    LISTAPDI_borrar(&lista_jugadores[i]);
-
+    LOGICA_inserirDcha(tablero, lista_jugadores, f,i);
   }
+  if(ok == 3){
+    do {
+      LOGICA_preguntarOpcion(&izq_dcha, MENU_IZQ_DCHA);
+    } while (izq_dcha != 1 && izq_dcha != 2);
+    if (izq_dcha == 1) {
+      LOGICA_inserirIzq(tablero, lista_jugadores,f,i);
+    }
+    else {
+      LOGICA_inserirDcha(tablero, lista_jugadores, f,i);
+
+    }
+  }
+}
+  /*
   if (ok == 0 && (opcion != j+1 || opcion!= j+2)) {
     printf("%s\n", NO_SE_PUEDE_FICHA);
+    LOGICA_robarFicha(l,lista_jugadores,i);
 
   }
   if(opcion == j + 1) {
-    printf("%s\n", PASAR_TURNO);
-
+    printf("%s\n", ROBAR_FICHA);
+    LOGICA_robarFicha(l,lista_jugadores,i);
   }
   if(opcion == j + 2) {
-    printf("Se roba ficha\n\n");
+    printf("%s\n",PASAR_TURNO);
 
-  }
-
-
-
-
-}
+  }*/

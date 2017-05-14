@@ -12,7 +12,6 @@ typedef struct {
     int cara2;
 } Ficha;
 
-
 typedef struct _Nodo {
     Ficha f;
     struct _Nodo * sig;
