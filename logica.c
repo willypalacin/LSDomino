@@ -91,7 +91,7 @@ int LOGICA_asignarGanador(ListaPDI* lista_jugadores, Player * players ,int num_p
       hay_domino[i] = 0;
       if(LISTAPDI_estaVacia(lista_jugadores[i]) == 1) {
         hay_domino[i] = 1;
-        printf("%s ha hecho domino!!\n", players[i].nombre);
+        printf("\n\n%s ha hecho domino!!\n\n", players[i].nombre);
         fin = 1;
       }
     }
@@ -158,6 +158,7 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * t
       LOGICA_pintarTablero(tablero);
       printf("Fichas %s:\n", players[i].nombre);
       LOGICA_mostrarFichasJugador(lista_jugadores,l,tablero,i,&pasar_turno);
+      system("clear");
       fin = LOGICA_asignarGanador(lista_jugadores, players, num_players);
       i++;
     }
