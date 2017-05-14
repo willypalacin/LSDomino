@@ -27,6 +27,7 @@ void LOGICA_desordenarFichas(Ficha_inserir fichas[28]) {
   int i,u,j, numero_random;
   Ficha aux;
   u = 0;
+  srand(time(NULL));
   while(u < 28) {
     if (fichas[u].inserida == 0) {
       numero_random = (int) rand() % 28;
@@ -226,19 +227,25 @@ void LOGICA_inserirDcha(ListaPDI * tablero, ListaPDI * lista_jugadores, Ficha f,
 }
 
 void LOGICA_preguntarOpcion(int * opcion, const texto[30]){
+  char a[20];
   printf("%s", texto);
   fflushnou();
-  scanf("%d", opcion);
+  scanf("%d",opcion);
+  //scanf("%d", opcion);
+
   fflushnou();
 
 }
 void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero,int opcion, int i, int j, int contador_flecha, int * pasar_turno) {
   int u = 0;
+  int robar = 0;
   int ok = 0;
+  int flag = 0;
   Ficha f, aux;
   if(contador_flecha == 0 && LISTAPDI_estaVacia(*l) == 0){
     j++;
     printf("\t%d- Robar Ficha\n", j);
+    robar++;
   }
   //Se printara pasar turno si y solo si no se tiran fichas y y el monton esta vacio
   if(contador_flecha == 0 && LISTAPDI_estaVacia(*l) == 1){
@@ -254,7 +261,7 @@ void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, Lista
           printf("%s\n", ERROR_OPCION_MAXIMO_PERMITIDO);
         }
       }while(opcion > j);
-
+      u = 0;
       LISTAPDI_irInicio(&lista_jugadores[i]);
       while (u<opcion-1) {
         LISTAPDI_avanzar(&lista_jugadores[i]);
@@ -263,12 +270,17 @@ void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, Lista
       f = LISTAPDI_consultar(lista_jugadores[i]);
       ok = LOGICA_sePuedeColocarFicha(tablero, f);
 
-    if(ok == 0 && contador_flecha > 0){
-      printf("%s\n", ERROR_OPCION_FICHA_VALIDA );
-    }
-    fflushnou();
+      fflushnou();
+
+      if(ok == 0 && opcion == j && robar == 1 ) {
+        flag = 1;
+      }
+      if(ok == 0 && flag == 0) {
+        printf("%s\n", ERROR_OPCION_FICHA_VALIDA );
+
+      }
     //Si hay fichas que tirar y la ficha que seleccionas no se puede colocar, repites bucle
-  }while (contador_flecha > 0 && ok == 0);
+  }while (ok == 0 && flag == 0);
   LOGICA_insertarLugarCorrespondiente(tablero, lista_jugadores,l ,f, ok ,i, j, pasar_turno);
 }
 
