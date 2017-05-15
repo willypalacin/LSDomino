@@ -3,6 +3,7 @@
 
 #include "ListaPDI.h"
 #include "jugadores.h"
+#include "ranking.h"
 #include <stdio.h>
 #include <time.h>
 #include <conio.h>
@@ -29,9 +30,9 @@ void LOGICA_anadirFichasALista (ListaPDI * l, Ficha_inserir fichas[28]);
 void LOGICA_robarFicha(ListaPDI * l, ListaPDI * lista_jugadores, int i);
 void LOGICA_robarFichaYMostrarla(ListaPDI * l, ListaPDI * lista_jugadores, int i);
 void LOGICA_pintarTablero(ListaPDI * l);
-void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero , Player * players, int num_players);
+void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero , Player * players, int num_players, Jugador * jugadores, int num_jugs_ranking);
 int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f);
-int LOGICA_asignarGanador(ListaPDI* lista_jugadores, Player * players ,int num_players);
+int LOGICA_asignarGanador(ListaPDI* lista_jugadores, Player * players ,int num_players, Jugador * jugadores, int num_jugs_ranking);
 void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores ,ListaPDI * l, ListaPDI * tablero ,int i, int * pasar_turno);
 void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero,int opcion, int i, int j, int contador_flecha, int * pasar_turno);
 void LOGICA_inserirIzq(ListaPDI * tablero, ListaPDI * lista_jugadores, Ficha f, int i);

@@ -8,44 +8,12 @@
 #define ERROR_NOMBRE_FICHERO_PLAYERS "Error al abrir el fichero de jugadores. Recuerde que debe llamarse player.txt"
 
 
-/*void crearFichero (){
-  FILE * fichero;
-  int num_jugadores;
-  Jugador jugador;
 
-  fichero = fopen ("ranking.bin", "wb");
-  if (fichero == NULL){
-    fflush(stdout);
-    printf ("%s\n", "No se puede abrir el fichero");
-  }
-  else {
-    num_jugadores = 3;
-    fwrite (&num_jugadores, sizeof(int), 1, fichero);
-    jugador.nombre = "Pepe";
-    jugador.p_perdidas = 2;
-    jugador.p_ganadas = 4;
-
-    fwrite (&jugador, sizeof(Jugador),1,fichero);
-
-    jugador.nombre = "Josemi";
-    jugador.p_perdidas = 3;
-    jugador.p_ganadas = 5;
-
-    fwrite (&jugador, sizeof(Jugador),1,fichero);
-
-    jugador.nombre = "AlbertTRIAS";
-    jugador.p_perdidas = 3;
-    jugador.p_ganadas = 43;
-    fwrite (&jugador, sizeof(Jugador),1,fichero);
-
-    fclose (fichero);
-}
-}
-*/
 
 int main (int argc, char* *argv) {
   FILE * f;
   int opcion;
+  
 
   if (argc != 3) {
     printf("%s\n", ERROR_ARGC );

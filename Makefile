@@ -6,7 +6,7 @@ main.o: main.c menu.h menu.c
 menu.o: menu.c menu.h ranking.h jugadores.h ListaPDI.h logica.h
 	gcc menu.c -c -Wall -Wextra
 
-ranking.o: ranking.c ranking.h
+ranking.o: ranking.c ranking.h jugadores.h
 	gcc ranking.c -c -Wall -Wextra
 
 ListaPDI.o: ListaPDI.h

@@ -36,7 +36,7 @@ void JUGADORES_asignarCadena(Player ** players, char cadena[20], int w) {
     }
     (*players)[w].turno = (cadena[u+1] - '0');
   }
-  cadena = " ";
+  cadena = '\0';
 }
 
 void JUGADORES_guardarEnEstructura (FILE * f_players, Player ** players, int  num_players) {
@@ -57,9 +57,11 @@ void JUGADORES_guardarEnEstructura (FILE * f_players, Player ** players, int  nu
     while (i<num_players) {
       fgets(cadena, 20 , f_players);
       JUGADORES_asignarCadena(players ,cadena, i);
+
       i++;
     }
   }
+  fclose(f_players);
 }
 
 void JUGADORES_ordenSegunTurno(Player ** players, int n) {

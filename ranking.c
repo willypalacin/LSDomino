@@ -34,6 +34,131 @@ void RANKING_printarDatos (Jugador j, Extra_info extra){
 
 }
 
+
+void RANKING_escribirEnFichero(Jugador *jugadores,int num_jugadores) {
+  FILE * fichero = fopen("ranking.bin", "wb");
+  int i = 0;
+  fwrite (&num_jugadores, sizeof(int), 1, fichero);
+  while(i<num_jugadores) {
+    fwrite (jugadores[i].nombre, sizeof(char), 20, fichero);
+    fwrite (&jugadores[i].p_ganadas, sizeof(int), 1, fichero);
+    fwrite (&jugadores[i].p_perdidas, sizeof(int), 1, fichero);
+
+    i++;
+  }
+  fclose(fichero);
+
+}
+
+void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores,int  num_players, int num_jugs_ranking, int u) {
+  Jugador * aux_jugs;
+  Extra_info * extra_info;
+  int i, j, contador;
+  int no_repetido = 0;
+  Jugador temporal[50];
+  if(num_jugs_ranking == 0) {
+
+    aux_jugs = (Jugador*) malloc (sizeof(Jugador)* num_players);
+    if(aux_jugs != NULL) {
+      extra_info = (Extra_info*)malloc (sizeof(Extra_info) * num_players);
+      if(extra_info!= NULL) {
+        for(i = 0; i<num_players; i++){
+
+          aux_jugs[i].nombre = (char *) malloc (sizeof(char) * (strlen(players[i].nombre)+1));
+          strcpy(aux_jugs[i].nombre, players[i].nombre);
+          if(i==u) {
+            aux_jugs[i].p_ganadas = 1;
+            aux_jugs[i].p_perdidas = 0;
+          }
+          else {
+            aux_jugs[i].p_ganadas = 0;
+            aux_jugs[i].p_perdidas = 1;
+
+          }
+          extra_info[i].p_totales = aux_jugs[i].p_ganadas + aux_jugs[i].p_perdidas;
+          extra_info[i].win_rate = (((float)aux_jugs[i].p_ganadas /(float) extra_info[i].p_totales) * 100);
+        }
+
+
+      }
+
+    }
+    RANKING_escribirEnFichero(aux_jugs,num_players);
+  }
+  else {
+    contador = 0;
+    for(i = 0; i < num_players; i++) {
+      for(j = 0; j < num_jugs_ranking; j++) {
+        if(strcmp(jugadores[j].nombre,players[i].nombre) == 0) {
+          printf("ENTRA\n");
+          strcpy(temporal[contador].nombre,jugadores[j].nombre);
+          temporal[contador].p_ganadas = jugadores[j].p_ganadas;
+          temporal[contador].p_perdidas = jugadores[j].p_perdidas;
+
+          }
+          else {
+            strcpy(temporal[contador].nombre, players[j].nombre);
+            temporal[contador].p_ganadas = 0;
+            temporal[contador].p_perdidas = 0;
+            no_repetido++;
+          }
+          if(contador == u) {
+            temporal[contador].p_ganadas++;
+          }
+          else{
+            temporal[contador].p_perdidas++;
+
+          }
+          contador++;
+        }
+      }
+      RANKING_escribirEnFichero(temporal,contador);
+    }
+}
+
+Jugador * RANKING_cargarEstructura(int * num_jugs_ranking) {
+    int aux;
+    FILE * f = fopen("ranking.bin", "r");
+    Jugador * jugadores;
+    fread (num_jugs_ranking, sizeof(int), 1, f);
+    if(feof(f) == 1) {
+      *num_jugs_ranking = 0;
+    }
+    else{
+      jugadores = (Jugador *) malloc (sizeof (Jugador) * (*num_jugs_ranking));
+      if (jugadores == NULL){
+          printf("%s\n", ERROR_MEMORIA);
+      }
+    }
+    fclose(f);
+    return jugadores;
+}
+
+void RANKING_almacenoJugadores(Jugador * jugadores, int num_jugs_ranking) {
+  FILE * fichero = fopen("ranking.bin", "r");
+  int i;
+  char aux[20];
+  fread (&i, sizeof(int), 1, fichero);
+  jugadores = (Jugador *) malloc (sizeof (Jugador) * num_jugs_ranking);
+  if (jugadores == NULL){
+    printf("%s\n", ERROR_MEMORIA);
+  }
+  else {
+
+    for (i = 0; i < num_jugs_ranking; i++) {
+      fread (aux, sizeof(char), 20, fichero);
+
+      jugadores[i].nombre = (char *)malloc(sizeof(char) * (strlen(aux)+1));
+      strcpy(jugadores[i].nombre,aux);
+
+      aux[0] = '\0';
+
+      }
+
+  }
+  fclose(fichero);
+}
+
 int RANKING_elegirOrden() {
   int orden;
   do {

@@ -84,7 +84,7 @@ void LOGICA_robarFichaYMostrarla(ListaPDI * l, ListaPDI * lista_jugadores, int i
   printf("\n");
 
 }
-int LOGICA_asignarGanador(ListaPDI* lista_jugadores, Player * players ,int num_players){
+int LOGICA_asignarGanador(ListaPDI* lista_jugadores, Player * players ,int num_players, Jugador * jugadores, int num_jugs_ranking){
   int hay_domino[4];
   int i;
   int fin = 0;
@@ -94,6 +94,8 @@ int LOGICA_asignarGanador(ListaPDI* lista_jugadores, Player * players ,int num_p
         hay_domino[i] = 1;
         printf("\n\n%s ha hecho domino!!\n\n", players[i].nombre);
         fin = 1;
+        RANKING_jugadoresAEstructura(players, jugadores,num_players, num_jugs_ranking, i);
+
       }
     }
 
@@ -142,7 +144,7 @@ void LOGICA_pintarTablero(ListaPDI * l) {
 
 }
 
-void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero , Player * players, int num_players) {
+void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero , Player * players, int num_players, Jugador * jugadores, int num_jugs_ranking) {
   int fin = 0;
   int i;
   int pasar_turno = 0;
@@ -160,7 +162,7 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * t
       printf("Fichas %s:\n", players[i].nombre);
       LOGICA_mostrarFichasJugador(lista_jugadores,l,tablero,i,&pasar_turno);
       system("clear");
-      fin = LOGICA_asignarGanador(lista_jugadores, players, num_players);
+      fin = LOGICA_asignarGanador(lista_jugadores, players, num_players, jugadores, num_jugs_ranking);
       i++;
     }
   }

@@ -16,10 +16,16 @@ void MENU_seleccionarOpcion (int opcion) {
   Player * players;
   ListaPDI l;
   ListaPDI * lista_jugadores;
+  Jugador * jugadores;
+  int num_jugs_ranking = 0;
   ListaPDI tablero;
   int num_players;
   int i,j;
   int fin = 0;
+  jugadores = RANKING_cargarEstructura(&num_jugs_ranking);
+  if(num_jugs_ranking != 0) {
+    RANKING_almacenoJugadores(jugadores, num_jugs_ranking);
+  }
   switch (opcion) {
     case 1:
 
@@ -48,10 +54,7 @@ void MENU_seleccionarOpcion (int opcion) {
       LISTAPDI_inserir(&tablero, LISTAPDI_consultar(l));
       LISTAPDI_borrar(&l);
       //Aqui comienza el JUEGO
-      LOGICA_dinamicaJuego(&l, lista_jugadores, &tablero, players ,num_players);
-
-
-
+      LOGICA_dinamicaJuego(&l, lista_jugadores, &tablero, players ,num_players, jugadores, num_jugs_ranking);
       break;
     case 2:
       //opcion_orden = elegirOrden ();

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "jugadores.h"
 #include <conio.h>
 
 #define MOSTRAR_POSIBILIDADES "Elige formato de ordenacion del ranking"
@@ -33,7 +34,11 @@ typedef struct {
 void RANKING_abrirFichero();
 void RANKING_crearEstructura (FILE * fichero, int num_jugadores);
 int RANKING_elegirOrden ();
+void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores,int  num_players, int num_jugs_ranking, int u);
 void RANKING_ordenarAlfabetico (Jugador * jugadores, Extra_info * extra_info ,int n);
+void RANKING_escribirEnFichero(Jugador *jugadores,int num_jugadores);
+Jugador * RANKING_cargarEstructura(int * num_jugs_ranking);
+void RANKING_almacenoJugadores(Jugador * jugadores, int num_jugs_ranking);
 void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugadores);
 void RANKING_printarDatos (Jugador j, Extra_info extra);
 
