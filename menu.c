@@ -13,18 +13,25 @@ void MENU_mostrarMenu() {
 }
 
 void MENU_seleccionarOpcion (int opcion) {
+
   Player * players;
   ListaPDI l;
   ListaPDI * lista_jugadores;
   Jugador * jugadores;
-  int num_jugs_ranking = 0;
+  int num_jugs_ranking;
   ListaPDI tablero;
   int num_players;
   int i,j;
-  int fin = 0;
-  jugadores = RANKING_cargarEstructura(&num_jugs_ranking);
+  int fin;
+  fin = 0;
+  num_jugs_ranking = 0;
+
+  RANKING_numJugadoresIniciales(&num_jugs_ranking);
+
+  printf("%d\n", num_jugs_ranking );
+
   if(num_jugs_ranking != 0) {
-    RANKING_almacenoJugadores(jugadores, num_jugs_ranking);
+    RANKING_almacenoJugadores(&jugadores, num_jugs_ranking);
   }
   switch (opcion) {
     case 1:
@@ -55,7 +62,9 @@ void MENU_seleccionarOpcion (int opcion) {
       LISTAPDI_borrar(&l);
       //Aqui comienza el JUEGO
       LOGICA_dinamicaJuego(&l, lista_jugadores, &tablero, players ,num_players, jugadores, num_jugs_ranking);
+
       break;
+
     case 2:
       //opcion_orden = elegirOrden ();
       RANKING_abrirFichero();

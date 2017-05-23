@@ -254,6 +254,7 @@ void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, Lista
     j++;
     printf("\t%d- Pasar Turno\n", j);
     *pasar_turno++;
+    robar++;
   }
   do {
       //Comprueba que la ficha que seleccionas este en el intervalo

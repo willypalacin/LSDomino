@@ -12,8 +12,9 @@
 
 int main (int argc, char* *argv) {
   FILE * f;
-  int opcion;
-  
+  char opcion[20];
+  int opc;
+
 
   if (argc != 3) {
     printf("%s\n", ERROR_ARGC );
@@ -21,8 +22,8 @@ int main (int argc, char* *argv) {
   }
   else {
     f = fopen(argv[1], "r");
-    if(strcmp(argv[2], "player.txt") != 0) {
-      printf("%s\n", ERROR_NOMBRE_FICHERO_PLAYERS);
+    if(fopen(argv[2], "r") == NULL) {
+      printf("NO SE ENCONTRO EL FICHERO DE JUGADORES\n");
 
 
     }
@@ -36,9 +37,10 @@ int main (int argc, char* *argv) {
       do {
         MENU_mostrarMenu();
         fflushnou();
-        scanf("%d", &opcion);
-        MENU_seleccionarOpcion(opcion);
-      } while (opcion != 3);
+        gets(opcion);
+        opc = opcion[0] - '0';
+        MENU_seleccionarOpcion(opc);
+      } while (opc != 3);
     }
   }
 

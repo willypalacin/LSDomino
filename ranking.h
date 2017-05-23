@@ -31,16 +31,22 @@ typedef struct {
   float win_rate;
 } Extra_info;
 
+typedef struct {
+  char nombre[20];
+  int p_g;
+  int p_p;
+}J;
+
 void RANKING_abrirFichero();
 void RANKING_crearEstructura (FILE * fichero, int num_jugadores);
 int RANKING_elegirOrden ();
 void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores,int  num_players, int num_jugs_ranking, int u);
 void RANKING_ordenarAlfabetico (Jugador * jugadores, Extra_info * extra_info ,int n);
 void RANKING_escribirEnFichero(Jugador *jugadores,int num_jugadores);
-Jugador * RANKING_cargarEstructura(int * num_jugs_ranking);
-void RANKING_almacenoJugadores(Jugador * jugadores, int num_jugs_ranking);
+void RANKING_numJugadoresIniciales(int * num_jugs_ranking);
+void RANKING_almacenoJugadores(Jugador * * jugadores, int num_jugs_ranking);
 void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugadores);
-void RANKING_printarDatos (Jugador j, Extra_info extra);
+void RANKING_printarDatos (Jugador * j, Extra_info * extra, int num_jugadores);
 
 
 #endif
