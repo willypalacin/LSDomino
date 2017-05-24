@@ -174,14 +174,15 @@ int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f) {
   Ficha aux;
   LISTAPDI_irInicio(l);
   aux = LISTAPDI_consultar(*l);
-  if (aux.cara1 == f.cara1 || aux.cara1 == f.cara2 || aux.cara2 == f.cara1 || aux.cara2 == f.cara2) {
+  //Solo se podra colocar si mi ficha coincide con la cara1 de aux
+  if (aux.cara1 == f.cara1 || aux.cara1 == f.cara2) {
     ok = 1;
 
   }
 
   aux = LISTAPDI_consultarFinalLista(l);
-
-  if (aux.cara1 == f.cara1 || aux.cara1 == f.cara2 || aux.cara2 == f.cara1 || aux.cara2 == f.cara2) {
+  //Solo se podra colocoar si cualquiera delas dos caras de la ficha del jugador coincide con la cara2 del tablero
+  if (aux.cara2 == f.cara1 || aux.cara2 == f.cara2) {
     ok = ok + 2;
 
   }
@@ -215,15 +216,29 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores ,ListaPDI * l, Lista
 }
 
 void LOGICA_inserirIzq(ListaPDI * tablero, ListaPDI * lista_jugadores, Ficha f, int i) {
+  Ficha aux;
   LISTAPDI_irInicio(tablero);
+  if(f.cara2  != LISTAPDI_consultar(*tablero).cara1){
+    //Hago un SWAP
+    aux.cara1 = f.cara2;
+    f.cara2 = f.cara1;
+    f.cara1 = aux.cara1;
+  }
   LISTAPDI_inserir(tablero, f);
   LISTAPDI_borrar(&lista_jugadores[i]);
 
 }
 
 void LOGICA_inserirDcha(ListaPDI * tablero, ListaPDI * lista_jugadores, Ficha f,int i) {
+  Ficha a;
   Ficha aux;
-  aux = LISTAPDI_consultarFinalLista(tablero);
+  a = LISTAPDI_consultarFinalLista(tablero);
+  if(f.cara1  != a.cara2){
+    //Hago un SWAP
+    aux.cara1 = f.cara2;
+    f.cara2 = f.cara1;
+    f.cara1 = aux.cara1;
+  }
   LISTAPDI_inserir(tablero, f);
   LISTAPDI_borrar(&lista_jugadores[i]);
 }
@@ -300,6 +315,7 @@ void LOGICA_insertarLugarCorrespondiente(ListaPDI * tablero, ListaPDI* lista_jug
 
   }
   if (ok == 1) {
+
     LOGICA_inserirIzq(tablero, lista_jugadores,f,i);
   }
   if (ok == 2) {

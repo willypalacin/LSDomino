@@ -241,28 +241,25 @@ void RANKING_ordenarAlfabetico (Jugador * jugadores, Extra_info * extra_info, in
     }
 }
 
-void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugadores) {
+void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int n) {
 	int i, j;
 	Jugador tmp;
 	Extra_info tmp2;
 
-	for (i = 0; i < num_jugadores; i++) {
-		for (j = num_jugadores - 1; j >= i; j--) {
+  for (i = 0 ; i < ( n - 1 ); i++) {
+    for (j = 0 ; j < n - i - 1; j++) {
+      if (strcmp(jugadores[j].nombre,jugadores[j+1].nombre) > 0) {
+        tmp = jugadores[j];
+        jugadores[j] = jugadores[j+1];
+        jugadores[j+1] = tmp;
 
-			if (extra_info[j].win_rate < extra_info[j-1].win_rate) {
+        tmp2 = extra_info[j];
+        extra_info[j] = extra_info[j + 1];
+        extra_info[j+1] = tmp2;
 
-				tmp = jugadores[j];
-				jugadores[j] = jugadores[j-1];
-				jugadores[j-1] = tmp;
-
-  			tmp2 = extra_info[j];
-  			extra_info[j] = extra_info[j - 1];
-      	extra_info[j-1] = tmp2;
-        printf("%s","\n");
-
-			}
-		}
-	}
+      }
+    }
+  }
 
 
 }

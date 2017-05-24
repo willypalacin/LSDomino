@@ -45,7 +45,7 @@ void RANKING_ordenarAlfabetico (Jugador * jugadores, Extra_info * extra_info ,in
 void RANKING_escribirEnFichero(Jugador *jugadores,int num_jugadores);
 void RANKING_numJugadoresIniciales(int * num_jugs_ranking);
 void RANKING_almacenoJugadores(Jugador * * jugadores, int num_jugs_ranking);
-void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int num_jugadores);
+void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int n);
 void RANKING_printarDatos (Jugador * j, Extra_info * extra, int num_jugadores);
 
 

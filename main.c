@@ -12,8 +12,7 @@
 
 int main (int argc, char* *argv) {
   FILE * f;
-  char opcion[20];
-  int opc;
+  int opcion;
 
 
   if (argc != 3) {
@@ -37,10 +36,10 @@ int main (int argc, char* *argv) {
       do {
         MENU_mostrarMenu();
         fflushnou();
-        gets(opcion);
-        opc = opcion[0] - '0';
-        MENU_seleccionarOpcion(opc);
-      } while (opc != 3);
+        scanf("%d",&opcion);
+
+        MENU_seleccionarOpcion(opcion);
+      } while (opcion != 3);
     }
   }
 
