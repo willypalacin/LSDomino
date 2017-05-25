@@ -107,12 +107,14 @@ int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, int num_play
   int fin, minima,i,u;
   int sumatorio_fichas[4];
   fin = 0;
+  
   if(pasar_turno == 4) {
     fin = 1;
     for(i = 0; i < num_players; i++) {
+      LISTAPDI_irInicio(&lista_jugadores[i]);
       sumatorio_fichas[i] = 0;
       //Si llegamos aqui es porque se ha pasado turno 4 veces. Hallaremos el valor minimo de las dichas
-      while(LISTAPDI_estaVacia(lista_jugadores[i]) == 0) {
+      while(LISTAPDI_final(lista_jugadores[i]) == 0) {
         sumatorio_fichas[i] = sumatorio_fichas[i] + LISTAPDI_consultar(lista_jugadores[i]).cara1 + LISTAPDI_consultar(lista_jugadores[i]).cara2;
         LISTAPDI_avanzar(&lista_jugadores[i]);
       }
@@ -123,7 +125,9 @@ int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, int num_play
       if(sumatorio_fichas[i]<minima) {
         minima = sumatorio_fichas[i];
         u = i;
+
       }
+      i++;
     }
     printf("Como todos han pasado turno, el ganador es %s por tener menos fichas\n", players[u].nombre);
   }
@@ -132,16 +136,30 @@ int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, int num_play
 
 void LOGICA_pintarTablero(ListaPDI * l) {
   Ficha f;
+
   LISTAPDI_irInicio(l);
   printf("Tablero: ");
+
+  /*CONTROL PARA QUE SALGA PASAR TURNO;
+  Ficha eliminar;
+  eliminar.cara1 = 8;
+  eliminar.cara2 = 8;
+  LISTAPDI_inserir(l, eliminar);
+  */
+
   while(LISTAPDI_final(*l) == 0){
     f = LISTAPDI_consultar(*l);
     printf("[%d|%d] ", f.cara1, f.cara2);
     LISTAPDI_avanzar(l);
 
+
   }
   printf("\n\n");
-
+  /* CONTROL PARA PASAR TURNO
+  eliminar.cara1 = 6;
+  eliminar.cara2 = 6;
+  LISTAPDI_inserir(l, eliminar);
+  */
 }
 
 void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero , Player * players, int num_players, Jugador * jugadores, int num_jugs_ranking) {
@@ -154,8 +172,9 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * t
 
     fin = LOGICA_hayGanador(lista_jugadores, players ,num_players ,pasar_turno);
 
-    //pasar turno = 0 en cada ronda solo si los 4 lo pulsan acabaremos partida
     pasar_turno = 0;
+
+
     while(i < num_players && fin == 0) {
       //PRINTAR SOLO UNA FICHA.
       LOGICA_pintarTablero(tablero);
@@ -164,6 +183,7 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * t
       system("clear");
       fin = LOGICA_asignarGanador(lista_jugadores, players, num_players, jugadores, num_jugs_ranking);
       i++;
+
     }
   }
 }
@@ -211,7 +231,7 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores ,ListaPDI * l, Lista
     j++;
   }
   //Modificar el contar ficha
-  LOGICA_llevarOpcionATablero(l,lista_jugadores, tablero ,opcion, i, j, contador_flecha, &pasar_turno);
+  LOGICA_llevarOpcionATablero(l,lista_jugadores, tablero ,opcion, i, j, contador_flecha, pasar_turno);
   LISTAPDI_irInicio(lista_jugadores);
 }
 
@@ -268,7 +288,7 @@ void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, Lista
   if(contador_flecha == 0 && LISTAPDI_estaVacia(*l) == 1){
     j++;
     printf("\t%d- Pasar Turno\n", j);
-    *pasar_turno++;
+    *pasar_turno = *pasar_turno + 1;
     robar++;
   }
   do {
@@ -309,9 +329,7 @@ void LOGICA_insertarLugarCorrespondiente(ListaPDI * tablero, ListaPDI* lista_jug
     if(LISTAPDI_estaVacia(*l) == 0) {
       LOGICA_robarFichaYMostrarla(l,lista_jugadores,i);
     }
-    else {
-      *pasar_turno++;
-    }
+
 
   }
   if (ok == 1) {

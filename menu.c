@@ -3,6 +3,13 @@
 
 
 void MENU_mostrarMenu() {
+  /*FILE * f = fopen("AB.txt", "r");
+  char aux[101];
+  fgets(aux,101,f);
+  while (!feof(f)) {
+    printf("%s", aux );
+      fgets(aux,101,f);
+  }*/
   printf("%s\n", MENU_WELCOME);
   printf("\t%s\n", MENU_OP1);
   printf("\t%s\n", MENU_OP2);
@@ -28,7 +35,6 @@ void MENU_seleccionarOpcion (int opcion) {
 
   RANKING_numJugadoresIniciales(&num_jugs_ranking);
 
-  printf("%d\n", num_jugs_ranking );
 
   if(num_jugs_ranking != 0) {
     RANKING_almacenoJugadores(&jugadores, num_jugs_ranking);
