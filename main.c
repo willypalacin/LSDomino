@@ -13,39 +13,35 @@
 int main (int argc, char* *argv) {
   FILE * f;
   int opcion;
-
+  int error_players = 0;
 
   if (argc != 3) {
     printf("%s\n", ERROR_ARGC );
-
   }
   else {
-    f = fopen(argv[1], "r");
     if(fopen(argv[2], "r") == NULL) {
       printf("%s\n", ERROR_NOMBRE_FICHERO_PLAYERS);
 
-
     }
     else {
-      if (f == NULL) {
-        printf("%s\n", CREAR_RANKING );
-        f = fopen("ranking.bin", "wb");
+      error_players = JUGADORES_comprobarFicheroPlayers(argv);
+      if(error_players != 1){
+        f = fopen(argv[1], "rb");
+        if (f == NULL) {
+          printf("%s\n", CREAR_RANKING );
+          f = fopen(argv[1], "wb");
 
+        }
+        fclose(f);
+        do {
+          MENU_mostrarMenu();
+          fflushnou();
+          scanf("%d",&opcion);
+
+          MENU_seleccionarOpcion(opcion, argv);
+        } while (opcion != 3);
       }
-      fclose(f);
-      do {
-        MENU_mostrarMenu();
-        fflushnou();
-        scanf("%d",&opcion);
-
-        MENU_seleccionarOpcion(opcion);
-      } while (opcion != 3);
     }
   }
-
-  //crearFichero();
-
-
-
-return 0;
+  return 0;
 }

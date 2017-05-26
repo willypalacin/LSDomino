@@ -19,7 +19,9 @@ void MENU_mostrarMenu() {
 
 }
 
-void MENU_seleccionarOpcion (int opcion) {
+
+
+void MENU_seleccionarOpcion (int opcion, char * *argv) {
 
   Player * players;
   ListaPDI l;
@@ -33,16 +35,16 @@ void MENU_seleccionarOpcion (int opcion) {
   fin = 0;
   num_jugs_ranking = 0;
 
-  RANKING_numJugadoresIniciales(&num_jugs_ranking);
+  RANKING_numJugadoresIniciales(&num_jugs_ranking, argv);
 
 
   if(num_jugs_ranking != 0) {
-    RANKING_almacenoJugadores(&jugadores, num_jugs_ranking);
+    RANKING_almacenoJugadores(&jugadores, num_jugs_ranking, argv);
   }
   switch (opcion) {
     case 1:
 
-      JUGADORES_leerFichero(&players, &num_players);
+      JUGADORES_leerFichero(&players, &num_players, argv);
       //Hasta aquí ya tenemos la estructura de jugadores, faltará ordenarla segun el orden de tirad
       JUGADORES_ordenSegunTurno(&players, num_players);
 
@@ -67,13 +69,13 @@ void MENU_seleccionarOpcion (int opcion) {
       LISTAPDI_inserir(&tablero, LISTAPDI_consultar(l));
       LISTAPDI_borrar(&l);
       //Aqui comienza el JUEGO
-      LOGICA_dinamicaJuego(&l, lista_jugadores, &tablero, players ,num_players, jugadores, num_jugs_ranking);
+      LOGICA_dinamicaJuego(&l, lista_jugadores, &tablero, players ,num_players, jugadores, num_jugs_ranking, argv);
 
       break;
 
     case 2:
       //opcion_orden = elegirOrden ();
-      RANKING_abrirFichero();
+      RANKING_abrirFichero(argv);
 
       break;
     case 3:

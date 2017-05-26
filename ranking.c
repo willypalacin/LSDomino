@@ -2,11 +2,11 @@
 
 
 
-void RANKING_abrirFichero () {
+void RANKING_abrirFichero (char ** argv) {
   FILE * fichero;
   int num_jugadores;
 
-  fichero = fopen ("ranking.bin", "rb");
+  fichero = fopen (argv[1], "rb");
   fread (&num_jugadores, sizeof(int), 1, fichero);
   if (feof(fichero) != 1) {
     RANKING_crearEstructura (fichero, num_jugadores);
@@ -31,11 +31,11 @@ void RANKING_printarDatos (Jugador * j, Extra_info * extra, int num_jugadores){
   }
 }
 
-void RANKING_escribirEnFichero(Jugador * jugadores,int num_jugadores) {
+void RANKING_escribirEnFichero(Jugador * jugadores,int num_jugadores, char ** argv) {
   int num;
 
   J jug[20];
-  FILE * fichero = fopen("ranking.bin", "wb");
+  FILE * fichero = fopen(argv[1], "wb");
   int i = 0;
   fwrite (&num_jugadores, sizeof(int), 1, fichero);
   while(i<num_jugadores) {
@@ -47,7 +47,7 @@ void RANKING_escribirEnFichero(Jugador * jugadores,int num_jugadores) {
   }
 
   fclose(fichero);
-  fichero = fopen("ranking.bin", "rb");
+  fichero = fopen(argv[1], "rb");
   i = 0;
   fread (&num, sizeof(int), 1, fichero);
   while (i<num_jugadores) {
@@ -60,16 +60,13 @@ void RANKING_escribirEnFichero(Jugador * jugadores,int num_jugadores) {
 
 }
 
-void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  num_players, int num_jugs_ranking, int u) {
+void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  num_players, int num_jugs_ranking, int u, char ** argv) {
   Jugador * aux_jugs;
   Extra_info * extra_info;
   int i, j,r, i_temp, contador,encontrado;
   int tamano_malloc;
   int no_repetido = 0;
   Jugador * temporal;
-  printf("CONTROL num_j_ranking %d\n", num_jugs_ranking);
-
-
 
   if(num_jugs_ranking == 0) {
 
@@ -87,14 +84,12 @@ void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  nu
           aux_jugs[i].p_perdidas = 1;
         }
       }
-      RANKING_escribirEnFichero(aux_jugs,num_players);
+      RANKING_escribirEnFichero(aux_jugs,num_players,argv);
 
     }
 
   }
   else {
-
-    printf("CONTROL HOLAn");
 
     contador = 0;
 
@@ -111,7 +106,7 @@ void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  nu
     tamano_malloc = num_jugs_ranking + num_players - contador;
     i_temp = 0;
     temporal = (Jugador * )malloc(sizeof(Jugador) * (tamano_malloc));
-    printf("CONTROL: SALE %d\n",tamano_malloc);
+    
     for (i = 0; i < num_jugs_ranking; i++) {
 
       temporal[i] = jugadores[i];
@@ -140,14 +135,12 @@ void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  nu
         else {
           temporal[encontrado].p_perdidas++;
         }
-        printf("IGUALES \n");
 
 
       }
       else {
 
         temporal[i_temp].nombre= (char*)malloc(sizeof(char)*(strlen(players[i].nombre)+1));
-        printf("AQUI1\n");
         strcpy(temporal[i_temp].nombre, players[i].nombre);
         if(strcmp(temporal[i_temp].nombre, players[u].nombre) == 0) {
 
@@ -155,7 +148,6 @@ void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  nu
           temporal[i_temp].p_perdidas = 0;
         }
         else {
-          printf("AQUI NO COINCIDE %s\n");
           temporal[i_temp].p_ganadas = 0;
           temporal[i_temp].p_perdidas = 1 ;
 
@@ -166,16 +158,16 @@ void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  nu
       }
 
     }
-    RANKING_escribirEnFichero(temporal,i_temp);
+    RANKING_escribirEnFichero(temporal,i_temp,argv);
 
   }
 }
 
-void RANKING_numJugadoresIniciales(int * num_jugs_ranking) {
+void RANKING_numJugadoresIniciales(int * num_jugs_ranking, char ** argv) {
   int aux;
   FILE * f;
   Jugador * jugadores = NULL;
-  f = fopen("ranking.bin", "rb");
+  f = fopen(argv[1], "rb");
   fread (num_jugs_ranking, sizeof(int), 1, f);
   if(feof(f) == 1) {
     *num_jugs_ranking = 0;
@@ -184,8 +176,8 @@ void RANKING_numJugadoresIniciales(int * num_jugs_ranking) {
   fclose(f);
 }
 
-void RANKING_almacenoJugadores(Jugador* *jugadores, int num_jugs_ranking) {
-  FILE * fichero = fopen("ranking.bin", "rb");
+void RANKING_almacenoJugadores(Jugador* *jugadores, int num_jugs_ranking, char ** argv) {
+  FILE * fichero = fopen(argv[1], "rb");
   int i;
   char aux[20];
   fread (&i, sizeof(int), 1, fichero);
@@ -254,7 +246,7 @@ void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int n) 
 
   for (i = 0 ; i < ( n - 1 ); i++) {
     for (j = 0 ; j < n - i - 1; j++) {
-      if (extra_info[j].win_rate > extra_info[j].win_rate) {
+      if (extra_info[j].win_rate < extra_info[j+1].win_rate) {
         tmp = jugadores[j];
         jugadores[j] = jugadores[j+1];
         jugadores[j+1] = tmp;

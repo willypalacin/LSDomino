@@ -17,7 +17,7 @@
 #define SALIR 3
 
 void MENU_mostrarMenu ();
-void MENU_seleccionarOpcion (int opcion);
+void MENU_seleccionarOpcion (int opcion, char ** argv);
 
 
 #endif

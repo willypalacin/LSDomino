@@ -1,10 +1,10 @@
 #include "jugadores.h"
 
 
-void JUGADORES_leerFichero(Player* *players, int * num_players) {
+void JUGADORES_leerFichero(Player* *players, int * num_players, char ** argv) {
 
   FILE * f_players;
-  f_players = fopen("player.txt","r");
+  f_players = fopen(argv[2],"r");
   if (f_players == NULL) {
     printf("%s\n", ERROR_FICHERO_JUGADORES);
 
@@ -15,6 +15,54 @@ void JUGADORES_leerFichero(Player* *players, int * num_players) {
   }
 
 }
+
+int JUGADORES_extraerDatos(char aux[100]) {
+  int num_caracteres, i;
+  i = 0;
+  num_caracteres = 0;
+  while (aux[i] != '/') {
+    num_caracteres++;
+    i++;
+
+  }
+  return num_caracteres;
+
+
+}
+
+int JUGADORES_comprobarFicheroPlayers(char* *argv) {
+  int num_players, num_caracteres, i;
+  FILE * f;
+  int error = 0;
+  num_caracteres = 0;
+  char aux[100];
+  f = fopen(argv[2], "r");
+  fscanf(f,"%d",&num_players);
+  if(num_players != 2 && num_players != 3 && num_players != 4) {
+    printf("%s\n", ERROR_NUMERO_DE_JUGADORES);
+    error = 1;
+
+  }
+  else {
+    i = 0;
+    fgets(aux, 100, f);
+    while (i < num_players) {
+      fgets(aux, 100, f);
+      num_caracteres = JUGADORES_extraerDatos(aux);
+      if(num_caracteres > 20) {
+        printf(ERROR_CARACTERES, i+1);
+        error = 1;
+      }
+      num_caracteres = 0;
+      aux[0] = '\0';
+      i++;
+    }
+
+  }
+  fclose(f);
+  return error;
+}
+
 
 void JUGADORES_asignarCadena(Player ** players, char cadena[20], int w) {
 
@@ -36,7 +84,7 @@ void JUGADORES_asignarCadena(Player ** players, char cadena[20], int w) {
     }
     (*players)[w].turno = (cadena[u+1] - '0');
   }
-  cadena = '\0';
+  cadena[0] = '\0';
 }
 
 void JUGADORES_guardarEnEstructura (FILE * f_players, Player ** players, int  num_players) {
