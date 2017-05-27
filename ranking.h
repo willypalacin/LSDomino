@@ -44,6 +44,7 @@ void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores,int  num
 void RANKING_ordenarAlfabetico (Jugador * jugadores, Extra_info * extra_info ,int n);
 void RANKING_escribirEnFichero(Jugador *jugadores,int num_jugadores, char ** argv);
 void RANKING_numJugadoresIniciales(int * num_jugs_ranking, char ** argv);
+void RANKING_jugadoresEmpate(Player * players,Jugador * jugadores,int num_players, int num_jugs_ranking, int jugs_empate[4], char* *argv);
 void RANKING_almacenoJugadores(Jugador* *jugadores, int num_jugs_ranking, char ** argv);
 void RANKING_ordenWinRate (Jugador * jugadores, Extra_info * extra_info ,int n);
 void RANKING_printarDatos (Jugador * j, Extra_info * extra, int num_jugadores);

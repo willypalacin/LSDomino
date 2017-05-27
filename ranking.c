@@ -60,6 +60,111 @@ void RANKING_escribirEnFichero(Jugador * jugadores,int num_jugadores, char ** ar
 
 }
 
+void RANKING_jugadoresEmpate(Player * players, Jugador * jugadores, int num_players, int num_jugs_ranking, int jugs_empate[4], char* *argv) {
+  Jugador * aux_jugs;
+  Extra_info * extra_info;
+  int i, j,r, i_temp, contador,encontrado;
+  int tamano_malloc;
+  int no_repetido = 0;
+  Jugador * temporal;
+
+  if(num_jugs_ranking == 0) {
+
+    aux_jugs = (Jugador*) malloc (sizeof(Jugador)* num_players);
+    if(aux_jugs != NULL) {
+      for(i = 0; i<num_players; i++){
+        aux_jugs[i].nombre = (char *) malloc (sizeof(char) * (strlen(players[i].nombre)+1));
+        strcpy(aux_jugs[i].nombre, players[i].nombre);
+        if(jugs_empate[i] == 1) {
+          aux_jugs[i].p_ganadas = 1;
+          aux_jugs[i].p_perdidas = 0;
+        }
+        else {
+          aux_jugs[i].p_ganadas = 0;
+          aux_jugs[i].p_perdidas = 1;
+        }
+      }
+      RANKING_escribirEnFichero(aux_jugs,num_players,argv);
+
+    }
+
+  }
+  else {
+
+    contador = 0;
+
+    for(i = 0; i < num_players; i++) {
+      for(j = 0; j < num_jugs_ranking; j++) {
+        if( (strcmp(jugadores[j].nombre, players[i].nombre) == 0)) {
+
+          contador++;
+
+        }
+
+      }
+    }
+    tamano_malloc = num_jugs_ranking + num_players - contador;
+    i_temp = 0;
+    temporal = (Jugador * )malloc(sizeof(Jugador) * (tamano_malloc));
+
+    for (i = 0; i < num_jugs_ranking; i++) {
+
+      temporal[i] = jugadores[i];
+      i_temp++;
+    }
+
+
+    r = i_temp;
+    for(i = 0; i<num_players; i++) {
+      encontrado = -1;
+      for(j = 0; j < r; j++) {
+
+        if((strcmp(temporal[j].nombre, players[i].nombre)) == 0) {
+
+          //strcpy(temporal[i_temp].nombre, players[i].nombre);
+          encontrado = j;
+
+
+        }
+      }
+
+      if(encontrado != -1) {
+        if((jugs_empate[i]) == 1) {
+          temporal[encontrado].p_ganadas++;
+        }
+        else {
+          temporal[encontrado].p_perdidas++;
+        }
+
+
+      }
+      else {
+
+        temporal[i_temp].nombre= (char*)malloc(sizeof(char)*(strlen(players[i].nombre)+1));
+        strcpy(temporal[i_temp].nombre, players[i].nombre);
+        if(jugs_empate[i] == 1) {
+
+          temporal[i_temp].p_ganadas = 1;
+          temporal[i_temp].p_perdidas = 0;
+        }
+        else {
+          temporal[i_temp].p_ganadas = 0;
+          temporal[i_temp].p_perdidas = 1 ;
+
+        }
+
+        i_temp++;
+
+      }
+
+    }
+    RANKING_escribirEnFichero(temporal,i_temp,argv);
+
+  }
+}
+
+
+
 void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  num_players, int num_jugs_ranking, int u, char ** argv) {
   Jugador * aux_jugs;
   Extra_info * extra_info;

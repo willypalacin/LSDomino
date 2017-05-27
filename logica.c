@@ -181,8 +181,8 @@ int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, Jugador * ju
         while (i<num_players) {
 
           if(jugs_empate[i] == 1) {
-              printf(EMPATE, i+1 );
-              //RANKING_jugadoresEmpate(players,jugadores,num_players, num_jugs_ranking, i, argv);
+              printf(EMPATE, players[i].nombre );
+              RANKING_jugadoresEmpate(players,jugadores,num_players, num_jugs_ranking, jugs_empate, argv);
           }
           i++;
         }
