@@ -8,8 +8,6 @@
 #define ERROR_NOMBRE_FICHERO_PLAYERS "Error al abrir el fichero de jugadores. Vigile que este correctamente importado"
 
 
-
-
 int main (int argc, char* *argv) {
   FILE * f;
   int opcion;

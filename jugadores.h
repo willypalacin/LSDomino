@@ -6,7 +6,7 @@
 #define ERROR_MEMORIA "Error al generar memoria"
 #define ERROR_ESTRUCTURA_JUGADORES "Error al crear la estructura de los jugadores"
 #define ERROR_NUMERO_DE_JUGADORES "Error en el fichero de jugadores, el numero de jugadores de la partida solo puede ser 2, 3 o 4"
-#define ERROR_CARACTERES "Error al leer el ficher de jugadores. El jugador %d, supera los 20 caracteres"
+#define ERROR_CARACTERES "Error al leer el fichero de jugadores. El jugador %d, supera los 20 caracteres\n"
 
 #include <stdio.h>
 #include <stdlib.h>

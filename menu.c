@@ -3,19 +3,12 @@
 
 
 void MENU_mostrarMenu() {
-  /*FILE * f = fopen("AB.txt", "r");
-  char aux[101];
-  fgets(aux,101,f);
-  while (!feof(f)) {
-    printf("%s", aux );
-      fgets(aux,101,f);
-  }*/
+
   printf("%s\n", MENU_WELCOME);
   printf("\t%s\n", MENU_OP1);
   printf("\t%s\n", MENU_OP2);
   printf("\t%s\n", MENU_OP3);
   printf("%s", "Opcion: ");
-
 
 }
 

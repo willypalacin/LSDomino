@@ -102,34 +102,104 @@ int LOGICA_asignarGanador(ListaPDI* lista_jugadores, Player * players ,int num_p
   return fin;
 
 }
+int LOGICA_comprobarEmpate(int sumatorio_fichas[4], int jugs_empate[4], int num_players, int u) {
+  int empate;
+  int contador, i;
+  for (i = 0; i<num_players; i++) {
+    jugs_empate[i] = 0;
+  }
 
-int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, int num_players, int pasar_turno, char ** argv) {
+  i = 0;
+  empate = 0;
+  contador = 0;
+  while(i<num_players) {
+    if(sumatorio_fichas[u] == sumatorio_fichas[i]) {
+      jugs_empate[i] = 1;
+      contador++;
+    }
+    else {
+      jugs_empate[i] = 0;
+    }
+    i++;
+  }
+  if (contador > 1) {
+    empate = 1;
+  }
+
+  return empate;
+
+}
+
+int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, Jugador * jugadores ,int num_players, int pasar_turno, int num_jugs_ranking, char ** argv) {
   int fin, minima,i,u;
   int sumatorio_fichas[4];
+  int contador_fichas[4];
+  int jugs_empate[4];
+  int empate_menos_fichas = 0;
+  int empate_sumatorio = 0;
   fin = 0;
 
-  if(pasar_turno == 4) {
+  if(pasar_turno == num_players) {
     fin = 1;
     for(i = 0; i < num_players; i++) {
       LISTAPDI_irInicio(&lista_jugadores[i]);
       sumatorio_fichas[i] = 0;
-      //Si llegamos aqui es porque se ha pasado turno 4 veces. Hallaremos el valor minimo de las dichas
+      contador_fichas[i] = 0;
+      //Si llegamos aqui es porque se ha pasado turno 4 veces. Hallaremos quien tiene menos fichas
       while(LISTAPDI_final(lista_jugadores[i]) == 0) {
+        contador_fichas[i]++;
         sumatorio_fichas[i] = sumatorio_fichas[i] + LISTAPDI_consultar(lista_jugadores[i]).cara1 + LISTAPDI_consultar(lista_jugadores[i]).cara2;
         LISTAPDI_avanzar(&lista_jugadores[i]);
       }
     }
     i = 0;
-    minima = sumatorio_fichas[0];
+    minima = contador_fichas[0];
     while(i<num_players) {
-      if(sumatorio_fichas[i]<minima) {
-        minima = sumatorio_fichas[i];
+      if(contador_fichas[i]<minima) {
+        minima = contador_fichas[i];
         u = i;
       }
       i++;
     }
-    printf("Como todos han pasado turno, el ganador es %s por tener menos fichas\n", players[u].nombre);
-    //RANKING_jugadoresAEstructura(players,jugadores,num_players, num_jugs_ranking, u, argv);
+    //Voy a comprobar que no haya empate a la hora de ganar
+    empate_menos_fichas = LOGICA_comprobarEmpate(contador_fichas, jugs_empate,num_players,u);
+
+    if(empate_menos_fichas == 1) {
+      i = 0;
+      minima = sumatorio_fichas[0];
+      while(i<num_players) {
+        if(sumatorio_fichas[i]<minima) {
+          minima = sumatorio_fichas[i];
+          u = i;
+        }
+        i++;
+      }
+      empate_sumatorio= LOGICA_comprobarEmpate(sumatorio_fichas,jugs_empate,num_players, u);
+
+      if (empate_sumatorio == 1) {
+        i = 0;
+        while (i<num_players) {
+
+          if(jugs_empate[i] == 1) {
+              printf(EMPATE, i+1 );
+              //RANKING_jugadoresEmpate(players,jugadores,num_players, num_jugs_ranking, i, argv);
+          }
+          i++;
+        }
+      }
+      else {
+        printf("Como todos han pasado turno y empatan numero de fichas, el ganador es %s por que sus fichas suman menos\n", players[u].nombre);
+        RANKING_jugadoresAEstructura(players,jugadores,num_players, num_jugs_ranking, u, argv);
+      }
+    }
+    else {
+      printf("Como todos han pasado turno, el ganador es %s por tener menos fichas\n", players[u].nombre);
+      RANKING_jugadoresAEstructura(players,jugadores,num_players, num_jugs_ranking, u, argv);
+
+    }
+
+
+
   }
   return fin;
 }
@@ -156,8 +226,8 @@ void LOGICA_pintarTablero(ListaPDI * l) {
   }
   printf("\n\n");
   /*
-  eliminar.cara1 = 6;
-  eliminar.cara2 = 6;
+  eliminar.cara1 = 8;
+  eliminar.cara2 = 8;
   LISTAPDI_inserir(l, eliminar);
   */
 }
@@ -170,7 +240,7 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * t
   while(fin == 0) {
     i = 0;
 
-    fin = LOGICA_hayGanador(lista_jugadores, players ,num_players ,pasar_turno, argv);
+    fin = LOGICA_hayGanador(lista_jugadores, players ,jugadores,num_players ,pasar_turno, num_jugs_ranking,argv);
 
     pasar_turno = 0;
 

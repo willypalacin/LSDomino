@@ -106,7 +106,7 @@ void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  nu
     tamano_malloc = num_jugs_ranking + num_players - contador;
     i_temp = 0;
     temporal = (Jugador * )malloc(sizeof(Jugador) * (tamano_malloc));
-    
+
     for (i = 0; i < num_jugs_ranking; i++) {
 
       temporal[i] = jugadores[i];
