@@ -256,6 +256,9 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * t
 
     }
   }
+  if (fin == 1) {
+    LOGICA_liberaMemoria(&l, &lista_jugadores, &players, &tablero);
+  }
 }
 
 int LOGICA_sePuedeColocarFicha(ListaPDI * l, Ficha f) {
@@ -422,4 +425,10 @@ void LOGICA_insertarLugarCorrespondiente(ListaPDI * tablero, ListaPDI* lista_jug
 
     }
   }
+}
+
+void LOGICA_liberaMemoria(ListaPDI ** l, ListaPDI * *lista_jugadores, ListaPDI ** players,  ListaPDI ** tablero) {
+  free(*lista_jugadores);
+  free(*players);
+
 }

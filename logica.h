@@ -42,5 +42,6 @@ int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, Jugador * ju
 void LOGICA_inserirDcha(ListaPDI * tablero, ListaPDI * lista_jugadores, Ficha f, int i);
 void LOGICA_preguntarOpcion(int * opcion, const texto[30]);
 void LOGICA_insertarLugarCorrespondiente(ListaPDI * tablero, ListaPDI* lista_jugadores, ListaPDI * l, Ficha f, int ok ,int i, int j, int * pasar_turno);
+void LOGICA_liberaMemoria(ListaPDI ** l, ListaPDI * *lista_jugadores, ListaPDI ** players,  ListaPDI ** tablero);
 
 #endif

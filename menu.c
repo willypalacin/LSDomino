@@ -63,7 +63,7 @@ void MENU_seleccionarOpcion (int opcion, char * *argv) {
       LISTAPDI_borrar(&l);
       //Aqui comienza el JUEGO
       LOGICA_dinamicaJuego(&l, lista_jugadores, &tablero, players ,num_players, jugadores, num_jugs_ranking, argv);
-
+      
       break;
 
     case 2:
