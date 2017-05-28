@@ -16,7 +16,7 @@
 #define MENU_IZQ_DCHA "Desea colocarla a la izquierda o derecha\n\t1. Izquierda\n\t2. Derecha\n\t Opcion: "
 #define ERROR_OPCION_FICHA_VALIDA "La opcion seleccionada no es valida para colocarse"
 #define SE_HA_ROBADO_FICHA_X "Se ha robado la ficha [%d|%d]\n\n -Pulsa una tecla para continuar-\n"
-#define EMPATE "Hay empate a la hora de pasar turno del jugador %s\n"
+#define EMPATE "Hay empate a la hora de sumer fichas "
 
 typedef struct {
   int inserida;

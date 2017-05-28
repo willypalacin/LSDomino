@@ -91,6 +91,7 @@ void RANKING_jugadoresEmpate(Player * players, Jugador * jugadores, int num_play
 
     contador = 0;
 
+
     for(i = 0; i < num_players; i++) {
       for(j = 0; j < num_jugs_ranking; j++) {
         if( (strcmp(jugadores[j].nombre, players[i].nombre) == 0)) {
@@ -129,6 +130,7 @@ void RANKING_jugadoresEmpate(Player * players, Jugador * jugadores, int num_play
       if(encontrado != -1) {
         if((jugs_empate[i]) == 1) {
           temporal[encontrado].p_ganadas++;
+          
         }
         else {
           temporal[encontrado].p_perdidas++;

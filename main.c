@@ -4,7 +4,7 @@
 #include <string.h>
 
 #define ERROR_ARGC "Error, el formato introducido es incorrecto. Debe anadir los dos ficheros, primero el binario y despues el de jugadores."
-#define CREAR_RANKING "No existe el fichero Ranking... Creando ranking.bin"
+#define CREAR_RANKING "No existe el fichero Ranking... Creando el fichero"
 #define ERROR_NOMBRE_FICHERO_PLAYERS "Error al abrir el fichero de jugadores. Vigile que este correctamente importado"
 
 

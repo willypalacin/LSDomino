@@ -114,6 +114,7 @@ int LOGICA_comprobarEmpate(int sumatorio_fichas[4], int jugs_empate[4], int num_
       contador++;
     }
     else {
+
       jugs_empate[i] = 0;
     }
     i++;
@@ -134,6 +135,7 @@ int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, Jugador * ju
   int empate_menos_fichas = 0;
   int empate_sumatorio = 0;
   fin = 0;
+  u = 0;
 
   if(pasar_turno == num_players) {
     fin = 1;
@@ -158,9 +160,11 @@ int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, Jugador * ju
       i++;
     }
     //Voy a comprobar que no haya empate a la hora de ganar
+
     empate_menos_fichas = LOGICA_comprobarEmpate(contador_fichas, jugs_empate,num_players,u);
 
     if(empate_menos_fichas == 1) {
+
       i = 0;
       minima = sumatorio_fichas[0];
       while(i<num_players) {
@@ -170,17 +174,14 @@ int LOGICA_hayGanador(ListaPDI * lista_jugadores, Player * players, Jugador * ju
         }
         i++;
       }
-      empate_sumatorio= LOGICA_comprobarEmpate(sumatorio_fichas,jugs_empate,num_players, u);
+
+      empate_sumatorio = LOGICA_comprobarEmpate(sumatorio_fichas,jugs_empate,num_players, u);
 
       if (empate_sumatorio == 1) {
-        i = 0;
-        while (i<num_players) {
 
-          if(jugs_empate[i] == 1) {
-              printf(EMPATE, players[i].nombre );
-              RANKING_jugadoresEmpate(players,jugadores,num_players, num_jugs_ranking, jugs_empate, argv);
-          }
-          i++;
+        if(jugs_empate[i] == 1) {
+          printf(EMPATE);
+          RANKING_jugadoresEmpate(players,jugadores,num_players, num_jugs_ranking, jugs_empate, argv);
         }
       }
       else {
@@ -221,11 +222,11 @@ void LOGICA_pintarTablero(ListaPDI * l) {
 
   }
   printf("\n\n");
-  /*
+/*
   eliminar.cara1 = 8;
   eliminar.cara2 = 8;
   LISTAPDI_inserir(l, eliminar);
-  */
+*/
 }
 
 void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero , Player * players, int num_players, Jugador * jugadores, int num_jugs_ranking, char ** argv) {
@@ -236,10 +237,7 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * t
   while(fin == 0) {
     i = 0;
 
-    fin = LOGICA_hayGanador(lista_jugadores, players ,jugadores,num_players ,pasar_turno, num_jugs_ranking,argv);
-
     pasar_turno = 0;
-
 
     while(i < num_players && fin == 0) {
       //PRINTAR SOLO UNA FICHA.
@@ -248,6 +246,9 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * t
       LOGICA_mostrarFichasJugador(lista_jugadores,l,tablero,i,&pasar_turno);
       system("clear");
       fin = LOGICA_asignarGanador(lista_jugadores, players, num_players, jugadores, num_jugs_ranking, argv);
+      if (fin == 0) {
+        fin = LOGICA_hayGanador(lista_jugadores, players ,jugadores,num_players ,pasar_turno, num_jugs_ranking,argv);
+      }
       i++;
 
     }
@@ -291,6 +292,7 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores ,ListaPDI * l, Lista
     if (ok > 0) {
       printf("\t%d- [%d|%d] -> \n", j+1, f.cara1, f.cara2);
       contador_flecha++;
+      *pasar_turno = 0;
     }
     else {
       printf("\t%d- [%d|%d]\n", j+1, f.cara1, f.cara2);
