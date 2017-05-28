@@ -62,10 +62,8 @@ void RANKING_escribirEnFichero(Jugador * jugadores,int num_jugadores, char ** ar
 
 void RANKING_jugadoresEmpate(Player * players, Jugador * jugadores, int num_players, int num_jugs_ranking, int jugs_empate[4], char* *argv) {
   Jugador * aux_jugs;
-  Extra_info * extra_info;
   int i, j,r, i_temp, contador,encontrado;
   int tamano_malloc;
-  int no_repetido = 0;
   Jugador * temporal;
 
   if(num_jugs_ranking == 0) {
@@ -167,10 +165,8 @@ void RANKING_jugadoresEmpate(Player * players, Jugador * jugadores, int num_play
 
 void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  num_players, int num_jugs_ranking, int u, char ** argv) {
   Jugador * aux_jugs;
-  Extra_info * extra_info;
   int i, j,r, i_temp, contador,encontrado;
   int tamano_malloc;
-  int no_repetido = 0;
   Jugador * temporal;
 
   if(num_jugs_ranking == 0) {
@@ -269,9 +265,7 @@ void RANKING_jugadoresAEstructura(Player * players, Jugador * jugadores, int  nu
 }
 
 void RANKING_numJugadoresIniciales(int * num_jugs_ranking, char ** argv) {
-  int aux;
   FILE * f;
-  Jugador * jugadores = NULL;
   f = fopen(argv[1], "rb");
   fread (num_jugs_ranking, sizeof(int), 1, f);
   if(feof(f) == 1) {

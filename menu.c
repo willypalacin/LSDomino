@@ -24,8 +24,7 @@ void MENU_seleccionarOpcion (int opcion, char * *argv) {
   ListaPDI tablero;
   int num_players;
   int i,j;
-  int fin;
-  fin = 0;
+  
   num_jugs_ranking = 0;
 
   RANKING_numJugadoresIniciales(&num_jugs_ranking, argv);
@@ -63,7 +62,7 @@ void MENU_seleccionarOpcion (int opcion, char * *argv) {
       LISTAPDI_borrar(&l);
       //Aqui comienza el JUEGO
       LOGICA_dinamicaJuego(&l, lista_jugadores, &tablero, players ,num_players, jugadores, num_jugs_ranking, argv);
-      
+
       break;
 
     case 2:

@@ -24,7 +24,7 @@ void LOGICA_generarFichas(ListaPDI * l) {
 }
 
 void LOGICA_desordenarFichas(Ficha_inserir fichas[28]) {
-  int i,u,j, numero_random;
+  int u, numero_random;
   Ficha aux;
   u = 0;
   srand(time(NULL));
@@ -47,7 +47,7 @@ void LOGICA_desordenarFichas(Ficha_inserir fichas[28]) {
 }
 
 void LOGICA_anadirFichasALista (ListaPDI * l, Ficha_inserir fichas[28]) {
-  int i,j;
+  int i;
   //inserimos las fichas que estaban en estatico a la estructura lineal.
   LISTAPDI_irInicio(l);
   for(i = 0; i < 28; i++) {
@@ -68,7 +68,6 @@ void LOGICA_robarFicha(ListaPDI * l, ListaPDI * lista_jugadores, int i) {
 }
 void LOGICA_robarFichaYMostrarla(ListaPDI * l, ListaPDI * lista_jugadores, int i) {
   Ficha aux;
-  int c;
   LISTAPDI_irInicio(l);
   LISTAPDI_irInicio(&lista_jugadores[i]);
   aux = LISTAPDI_consultar(*l);
@@ -78,20 +77,17 @@ void LOGICA_robarFichaYMostrarla(ListaPDI * l, ListaPDI * lista_jugadores, int i
 
   fflushnou();
   system ("/bin/stty raw");
-  c = getchar();
+  getchar();
   system ("/bin/stty cooked");
   fflushnou();
   printf("\n");
 
 }
 int LOGICA_asignarGanador(ListaPDI* lista_jugadores, Player * players ,int num_players, Jugador * jugadores, int num_jugs_ranking, char ** argv){
-  int hay_domino[4];
   int i;
   int fin = 0;
     for(i = 0; i < num_players; i++) {
-      hay_domino[i] = 0;
       if(LISTAPDI_estaVacia(lista_jugadores[i]) == 1) {
-        hay_domino[i] = 1;
         printf("\n\n%s ha hecho domino!!\n\n", players[i].nombre);
         fin = 1;
         RANKING_jugadoresAEstructura(players, jugadores,num_players, num_jugs_ranking, i, argv);
@@ -257,7 +253,7 @@ void LOGICA_dinamicaJuego(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * t
     }
   }
   if (fin == 1) {
-    LOGICA_liberaMemoria(&l, &lista_jugadores, &players, &tablero);
+    LOGICA_liberaMemoria(&lista_jugadores, &players);
   }
 }
 
@@ -286,7 +282,6 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores ,ListaPDI * l, Lista
   Ficha f;
   int ok;
   int contador_flecha = 0;
-  int opcion;
   int j = 0;
   LISTAPDI_irInicio(&lista_jugadores[i]);
   //Printa una por una las fichas del jugador
@@ -304,7 +299,7 @@ void LOGICA_mostrarFichasJugador(ListaPDI * lista_jugadores ,ListaPDI * l, Lista
     j++;
   }
   //Modificar el contar ficha
-  LOGICA_llevarOpcionATablero(l,lista_jugadores, tablero ,opcion, i, j, contador_flecha, pasar_turno);
+  LOGICA_llevarOpcionATablero(l,lista_jugadores, tablero, i, j, contador_flecha, pasar_turno);
   LISTAPDI_irInicio(lista_jugadores);
 }
 
@@ -336,8 +331,7 @@ void LOGICA_inserirDcha(ListaPDI * tablero, ListaPDI * lista_jugadores, Ficha f,
   LISTAPDI_borrar(&lista_jugadores[i]);
 }
 
-void LOGICA_preguntarOpcion(int * opcion, const texto[30]){
-  char a[20];
+void LOGICA_preguntarOpcion(int * opcion, char texto[30]){
   printf("%s", texto);
   fflushnou();
   scanf("%d",opcion);
@@ -346,12 +340,13 @@ void LOGICA_preguntarOpcion(int * opcion, const texto[30]){
   fflushnou();
 
 }
-void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero,int opcion, int i, int j, int contador_flecha, int * pasar_turno) {
+void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, ListaPDI * tablero, int i, int j, int contador_flecha, int * pasar_turno) {
   int u = 0;
   int robar = 0;
+  int opcion;
   int ok = 0;
   int flag = 0;
-  Ficha f, aux;
+  Ficha f;
   if(contador_flecha == 0 && LISTAPDI_estaVacia(*l) == 0){
     j++;
     printf("\t%d- Robar Ficha\n", j);
@@ -392,10 +387,10 @@ void LOGICA_llevarOpcionATablero(ListaPDI * l, ListaPDI * lista_jugadores, Lista
       }
     //Si hay fichas que tirar y la ficha que seleccionas no se puede colocar, repites bucle
   }while (ok == 0 && flag == 0);
-  LOGICA_insertarLugarCorrespondiente(tablero, lista_jugadores,l ,f, ok ,i, j, pasar_turno);
+  LOGICA_insertarLugarCorrespondiente(tablero, lista_jugadores,l ,f, ok ,i);
 }
 
-void LOGICA_insertarLugarCorrespondiente(ListaPDI * tablero, ListaPDI* lista_jugadores, ListaPDI* l, Ficha f, int ok ,int i, int j, int * pasar_turno) {
+void LOGICA_insertarLugarCorrespondiente(ListaPDI * tablero, ListaPDI* lista_jugadores, ListaPDI* l, Ficha f, int ok ,int i) {
   int izq_dcha;
   //La unica posibilidad aqui de que ok valga cero es que el usuario haya pulsado robar ficha o pasar turno
   if(ok == 0) {
@@ -427,7 +422,7 @@ void LOGICA_insertarLugarCorrespondiente(ListaPDI * tablero, ListaPDI* lista_jug
   }
 }
 
-void LOGICA_liberaMemoria(ListaPDI ** l, ListaPDI * *lista_jugadores, ListaPDI ** players,  ListaPDI ** tablero) {
+void LOGICA_liberaMemoria(ListaPDI * *lista_jugadores, Player ** players) {
   free(*lista_jugadores);
   free(*players);
 
